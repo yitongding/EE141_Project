@@ -20,5 +20,21 @@ module ALU(
 );
 
     // Implement your ALU here, then delete this comment
-
+always @(*) begin
+	case (ALUop)
+		`ALU_ADD:  Out = A + B;
+		`ALU_SUB:  Out = A - B;
+		`ALU_AND:  Out = A & B;
+		`ALU_OR:   Out = A | B;
+		`ALU_XOR:  Out = A ^ B;
+		`ALU_SLT:  Out = $signed(A) < $signed(B);
+		`ALU_SLTU: Out = $unsigned(A) < $unsigned(B);
+		`ALU_SLL:  Out = A <<< B[4:0];
+		`ALU_SRA:  Out = $signed(A) >>> B[4:0];
+		`ALU_SRL:  Out = A >> B[4:0];
+		`ALU_COPY_B: Out = {B[31:22],3'h000};
+		`ALU_XXX:  Out = 32'h00000000;
+		default:   Out = 32'h00000000;
+	endcase
+end
 endmodule
