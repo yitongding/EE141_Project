@@ -2,7 +2,7 @@
  * UC Berkeley CS150
  * Fall 2014
  * List of ALU operations.
-/**
+ */
 
 `ifndef ALUOP
 `define ALUOP

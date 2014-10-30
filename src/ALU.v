@@ -32,7 +32,7 @@ always @(*) begin
 		`ALU_SLL:  Out = A <<< B[4:0];
 		`ALU_SRA:  Out = $signed(A) >>> B[4:0];
 		`ALU_SRL:  Out = A >> B[4:0];
-		`ALU_COPY_B: Out = {B[31:22],3'h000};
+		`ALU_COPY_B: Out = B;
 		`ALU_XXX:  Out = 32'h00000000;
 		default:   Out = 32'h00000000;
 	endcase
