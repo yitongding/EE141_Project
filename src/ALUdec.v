@@ -28,27 +28,25 @@ always @(*) begin
 		`OPC_ARI_RTYPE, `OPC_ARI_ITYPE:
 			case (funct) 
 			
-
-				`FNC_AND:  ALUop = `ALU_AND;
-				`FNC_OR:   ALUop = `ALU_OR;
-				`FNC_XOR:  ALUop = `ALU_XOR;
-				`FNC_SLT:  ALUop = `ALU_SLT;
-				`FNC_SLL:  ALUop = `ALU_SLL;
-				`FNC_SLTU: ALUop = `ALU_SLTU;
-					
 				`FNC_ADD_SUB:
 					if (add_rshift_type) begin
 						ALUop = `ALU_SUB;
 					end else begin
 						ALUop = `ALU_ADD;
 					end
-					
+				`FNC_SLL:  ALUop = `ALU_SLL;
+				`FNC_SLT:  ALUop = `ALU_SLT;
+				`FNC_SLTU: ALUop = `ALU_SLTU;
+				`FNC_XOR:  ALUop = `ALU_XOR;
+				`FNC_OR:   ALUop = `ALU_OR;
+				`FNC_AND:  ALUop = `ALU_AND;
 				`FNC_SRL_SRA:
 					if (add_rshift_type) begin
 						ALUop = `ALU_SRA;
 					end else begin
 						ALUop = `ALU_SRL;
 					end	
+					
 			endcase
 			
 		default: ALUop = `ALU_XXX;
