@@ -24,7 +24,7 @@ always @(*) begin
 	case (opcode)
 	
 		`OPC_LUI: ALUop = `ALU_COPY_B;
-		`OPC_AUIPC,`OPC_JAL,`OPC_JALR, `OPC_BRANCH, `OPC_LOAD, `OPC_STORE: ALUop = `ALU_ADD; 
+		`OPC_AUIPC,`OPC_JAL, `OPC_BRANCH, `OPC_LOAD, `OPC_STORE: ALUop = `ALU_ADD; 
 		`OPC_ARI_RTYPE, `OPC_ARI_ITYPE:
 			case (funct) 
 			
@@ -48,6 +48,7 @@ always @(*) begin
 					end	
 					
 			endcase
+		`OPC_JALR: ALUop = `ALU_JALR;
 			
 		default: ALUop = `ALU_XXX;
 		

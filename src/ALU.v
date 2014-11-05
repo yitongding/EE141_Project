@@ -33,6 +33,7 @@ always @(*) begin
 		`ALU_SRA:  Out = $signed(A) >>> B[4:0];
 		`ALU_SRL:  Out = A >> B[4:0];
 		`ALU_COPY_B: Out = B;
+		`ALU_JALR: Out = {(A + B)[31:1],1'b0};
 		`ALU_XXX:  Out = 32'h00000000;
 		default:   Out = 32'h00000000;
 	endcase

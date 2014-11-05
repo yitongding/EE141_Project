@@ -22,6 +22,7 @@
 `define ALU_SRA     4'd8
 `define ALU_SRL     4'd9
 `define ALU_COPY_B  4'd10
+`define ALU_JALR    4'd11
 `define ALU_XXX     4'd15
 
 `endif //ALUOP

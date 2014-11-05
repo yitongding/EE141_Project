@@ -3,10 +3,10 @@
 
 module datapath(
     input           clk, reset, stall,
-    input   [:0]  dpath_controls_i,
-    input   [:0]  exec_controls_x,
-    input   [:0]   hazard_controls,
-    output  [:0] datapath_contents,
+    input   [7:0]  dpath_controls_i,
+    input   [3:0]  exec_controls_x,
+    input   [1:0]   hazard_controls,
+    output  [31:0] datapath_contents,
 
     // Memory system connections
     output [31:0]   dcache_addr,
@@ -23,16 +23,25 @@ module datapath(
 //-------------------------------------------------------------------
 // Control status registers (CSR)
 //-------------------------------------------------------------------
-    reg    [31:0]  csr_tohost;
+    //reg    [31:0]  csr_tohost;
 
 /*
  Your implementation goes here:
 */
 
 //Control signal define
-	PCSrc;
-	ALUSrcE;
-	RegDstE;
+	wire BranchE, ALUSrcE, RegDstE, RegWriteE, MemWriteSrcE, MemWriteE;
+	wire [1:0] RegWriteSrcE;
+	wire [3:0] ALUop;
+	
+	assign BranchE = dpath_controls_i[5];
+	assign ALUSrcE = dpath_controls_i[4];
+	assign RegDstE = dpath_controls_i[1];
+	assign RegWriteE = dpath_controls_i[3];
+	assign RegWriteSrcE = dpath_controls_i[7:6];
+	assign MemWriteE = dpath_controls_i[2];
+	assign ALUop = exec_controls_x;
+	
 
 
 	
@@ -48,7 +57,7 @@ module datapath(
 			PC = `PC_RESET;
 		end else if (stall) begin
 			PC = PC;
-		end else if (PCSrc) begin
+		end else if (PCSrcM) begin
 			PC = PCBranchM;
 		end else begin
 			PC = PCPlus4F;
@@ -63,7 +72,7 @@ module datapath(
 	assign PCPlus4F = 4 + PCF;
 //icache	
 	assign icache_addr = PC;
-	assign icache_re = 1;
+	assign icache_re = ~stall;
 	always @(*) begin
 		if (stall) begin
 			InstrF = `INSTR_NOP;
@@ -93,8 +102,7 @@ module datapath(
 	wire   [31:0]  WriteRegE, ImmPro, PCBranchE;
 	wire   [6:0]   Opcode;
 	wire   [2:0]   Funct;
-	wire   [3:0]   ALUop;
-	wire           Add_rshift_type;
+	wire           Add_rshift_type, Branchout;
 	
 	assign Rs1 = InstrE[19:15];
 	assign Rs2 = InstrE[14:20];
@@ -104,10 +112,12 @@ module datapath(
 	assign A2 = Rs2;
 	assign SrcA = RegFile [A1];
 	assign WriteDataE = RegFile [A2];
-	assign PCBranchE = ImmPro + PCE;
+	assign PCBranchE = (PCJALRE)? ALUoutE : (ImmPro + PCE);
 	assign Opcode = InstrE[6:0];
 	assign Funct = InstrE[14:12];
 	assign Add_rshift_type = InstrE[30];
+	assign PCSrcE = Branchout & Branch;
+	assign datapath_contents = InstrE;
 	
 	always @(*) begin
 		
@@ -123,68 +133,92 @@ module datapath(
 			WriteRegE = Rs2;
 		end
 		
-		ImmProcess(Imm, Opcode, ImmPro);
-		
 	end
 	
-	ALUdec Dut1(
+	ImmProcess Dut2(
+	.Imm(Imm),
 	.opcode(Opcode),
-	.funct(Funct),
-	.add_rshift_type(Add_rshift_type),
-	.ALUop(ALUop)
+	.ImmPro(ImmPro)
 	);
 	
-	ALUop Dut2(
+	ALUop Dut1(
 	.ALUop(ALUop),
 	.A(SrcA),
 	.B(SrcB),
 	.Out(ALUOutE)
 	);
 	
-	task ImmProcess;
-		input  [31:0] Imm;
-		input  [6:0]  opcode;
-		output [31:0] ImmPro;
-		
-		case (opcode)
-			`OPC_LUI:       ImmPro = {Imm[31:12], 12d'0};
-			`OPC_AUIPC:     ImmPro = {Imm[31:12], 12d'0};
-			`OPC_JAL:       ImmPro = {{12{Imm[31]}}, Imm[19:12], Imm[20], Imm[30:25], Imm[24:21], 1'd0};
-			`OPC_JALR:      ImmPro = {{21{Imm[31]}}, Imm[30:20]};
-			`OPC_BRANCH:    ImmPro = {{20{Imm[31]}}, Imm[7], Imm[30:25], Imm[11:8], 1'd0};
-			`OPC_STORE:     ImmPro = {{21{Imm[31]}}, Imm[30:25], Imm[11:7]};
-			`OPC_LOAD:      ImmPro = {{21{Imm[31]}}, Imm[30:20]};
-			`OPC_ARI_RTYPE: ImmPro = 32'd0;
-			`OPC_ARI_ITYPE: ImmPro = {{21{Imm[31]}}, Imm[30:20]};
-			default:        ImmPro = 32'd0;
-		endcase
-	endtask
+	BranchPro Dut5(
+	.Opcode(Opcode),
+	.Funct(Funct),
+	.A(SrcA),
+	.B(WriteDataE)
+	.Branchout(Branchout)
+	);
+	
+
 	
 //-------------------------------------------------------------------
 // Exe to Mem
 //-------------------------------------------------------------------
 	reg [4:0]  WriteRegM;
 	reg [31:0] PCBranchM, WriteDataM, ALUOutM;
-	
+	reg [1:0] RegWriteSrcM;
+	reg MemWriteM, PCSrcM, RegWriteM;
 	always @(posedge) begin
 		WriteRegM <= WriteRegE;
 		PCBranchM <= PCBranchE;
 		WriteDataM <= WriteDataE;
 		ALUOutM <= ALUOutE;
+		RegWriteSrcM = RegWriteSrcE;
+		MemWriteM = MemWriteE;
+		PCSrcM = PCSrcE;
+		RegWriteM = RegWriteE;
 	end
 	
 //-------------------------------------------------------------------
 // Memory stage
 //-------------------------------------------------------------------
 
+	wire [31:0] A3, WD3;
+
+	assign dcache_addr = ALUOutM;
+	assign A3          = WriteRegM;
+	assign dcache_we[3:0] = {4{MemWriteM}};
+	assign dcache_re = (RegWriteSrcM == 2'b01);
+	
+	MemWHB Dut3 (
+		.Funct(Funct),
+		.Opcode(Opcode),
+		.MemWHBin(WriteDataM),
+		.MemWHBout(dcache_din)
+	);
+	
+	MemWHB Dut4 (
+		.Funct(Funct),
+		.Opcode(Opcode),
+		.MemWHBin(dcache_dout),
+		.MemWHBout(ReadDataM)
+	);
+	
+	
+	always @(*) begin
+		case (RegWriteSrcM)
+			2'b00: WD3 = ALUOutM;
+			2'b01: WD3 = ReadDataM;
+			2'b10: WD3 = PCBranchM;
+			2'b11: WD3 = PCBranchM + 4;
+		endcase
+	end
+	
+	always @(posedge clk) begin
+		if (RegWriteM) begin
+			RegFile[A3] = WD3;
+		end
+	end
 	
 	
 
 
-	
-	
-	
-	
-	
 endmodule
 
