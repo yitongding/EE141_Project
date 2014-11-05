@@ -3,7 +3,7 @@
 
 module datapath(
     input           clk, reset, stall,
-    input   [7:0]  dpath_controls_i,
+    input   [10:0]  dpath_controls_i,
     input   [3:0]  exec_controls_x,
     input   [1:0]   hazard_controls,
     output  [31:0] datapath_contents,
@@ -23,23 +23,23 @@ module datapath(
 //-------------------------------------------------------------------
 // Control status registers (CSR)
 //-------------------------------------------------------------------
-    //reg    [31:0]  csr_tohost;
+    reg    [31:0]  csr_tohost;
 
 /*
  Your implementation goes here:
 */
 
 //Control signal define
-	wire BranchE, ALUSrcE, RegDstE, RegWriteE, MemWriteSrcE, MemWriteE;
+	wire BranchE, ALUSrcE, RegDstE, RegWriteE, MemWriteSrcE;
 	wire [1:0] RegWriteSrcE;
-	wire [3:0] ALUop;
+	wire [3:0] ALUop, MemWriteE;
 	
-	assign BranchE = dpath_controls_i[5];
-	assign ALUSrcE = dpath_controls_i[4];
+	assign BranchE = dpath_controls_i[8];
+	assign ALUSrcE = dpath_controls_i[7];
 	assign RegDstE = dpath_controls_i[1];
-	assign RegWriteE = dpath_controls_i[3];
-	assign RegWriteSrcE = dpath_controls_i[7:6];
-	assign MemWriteE = dpath_controls_i[2];
+	assign RegWriteE = dpath_controls_i[6];
+	assign RegWriteSrcE = dpath_controls_i[10:9];
+	assign MemWriteE = dpath_controls_i[5:2];
 	assign ALUop = exec_controls_x;
 	
 
@@ -48,9 +48,9 @@ module datapath(
 //------------------------------------------------------------------
 //Instruction Stage
 //------------------------------------------------------------------
-	wire   [31:0]  PC, PCF, InstrF, PCPlus4F;
+	wire   [31:0]  PC, PCF, InstrF, PCPlus4F,PCBranchM;
 	reg    [31:0]  PCReg;
-	wire           PCSrc;
+	wire           PCSrcM;
 	
 	always @(*) begin
 		if (reset) begin
@@ -103,6 +103,7 @@ module datapath(
 	wire   [6:0]   Opcode;
 	wire   [2:0]   Funct;
 	wire           Add_rshift_type, Branchout;
+	wire 		   PCSrcE;
 	
 	assign Rs1 = InstrE[19:15];
 	assign Rs2 = InstrE[14:20];
@@ -112,11 +113,11 @@ module datapath(
 	assign A2 = Rs2;
 	assign SrcA = RegFile [A1];
 	assign WriteDataE = RegFile [A2];
-	assign PCBranchE = (PCJALRE)? ALUoutE : (ImmPro + PCE);
+	assign PCBranchE = (Opcode == `OPC_JALR)? ALUOutE : (ImmPro + PCE);
 	assign Opcode = InstrE[6:0];
 	assign Funct = InstrE[14:12];
 	assign Add_rshift_type = InstrE[30];
-	assign PCSrcE = Branchout & Branch;
+	assign PCSrcE = Branchout & BranchE;
 	assign datapath_contents = InstrE;
 	
 	always @(*) begin
@@ -141,7 +142,7 @@ module datapath(
 	.ImmPro(ImmPro)
 	);
 	
-	ALUop Dut1(
+	ALU Dut1(
 	.ALUop(ALUop),
 	.A(SrcA),
 	.B(SrcB),
@@ -152,7 +153,7 @@ module datapath(
 	.Opcode(Opcode),
 	.Funct(Funct),
 	.A(SrcA),
-	.B(WriteDataE)
+	.B(WriteDataE),
 	.Branchout(Branchout)
 	);
 	
@@ -162,10 +163,11 @@ module datapath(
 // Exe to Mem
 //-------------------------------------------------------------------
 	reg [4:0]  WriteRegM;
-	reg [31:0] PCBranchM, WriteDataM, ALUOutM;
+	reg [31:0] WriteDataM, ALUOutM;
 	reg [1:0] RegWriteSrcM;
-	reg MemWriteM, PCSrcM, RegWriteM;
-	always @(posedge) begin
+	reg RegWriteM;
+	reg [3:0] MemWriteM;
+	always @(posedge clk) begin
 		WriteRegM <= WriteRegE;
 		PCBranchM <= PCBranchE;
 		WriteDataM <= WriteDataE;
@@ -180,11 +182,11 @@ module datapath(
 // Memory stage
 //-------------------------------------------------------------------
 
-	wire [31:0] A3, WD3;
+	wire [31:0] A3, WD3, ReadDataM;
 
 	assign dcache_addr = ALUOutM;
 	assign A3          = WriteRegM;
-	assign dcache_we[3:0] = {4{MemWriteM}};
+	assign dcache_we[3:0] = MemWriteM;
 	assign dcache_re = (RegWriteSrcM == 2'b01);
 	
 	MemWHB Dut3 (

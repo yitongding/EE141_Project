@@ -180,7 +180,7 @@ module rocketTestHarness;
 
     //$fwrite(32'h80000002, "C%d: %d [%d] pc=[%h] W[r%d=%h][%d] R[r%d=%h] R[r%d=%h] inst=[%h] DASM(%h)\n", T135, T133, T132, T130, T128, T127, T126, T124, T97, T95, T9, T8, T1);
     if (reset == 0) begin
-      $fwrite(32'h80000002, "C%0d: PC=%h W[r%d=%h] WE=%d DASM(%h)\n",trace_count,dut.cpu.dpath.pc_m,dut.cpu.dpath.wb_reg_m,dut.cpu.dpath.wb_value,dut.cpu.dpath.wb_reg_we,dut.cpu.dpath.inst_m);
+      $fwrite(32'h80000002, "C%0d: PC=%h W[r%d=%h] WE=%d DASM(%h)\n",trace_count,dut.cpu.dpath.PC,dut.cpu.dpath.wb_reg_m,dut.cpu.dpath.wb_value,dut.cpu.dpath.wb_reg_we,dut.cpu.dpath.inst_m);
     end
 
     if (max_cycles > 0 && trace_count > max_cycles) begin
