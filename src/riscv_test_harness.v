@@ -143,7 +143,7 @@ module rocketTestHarness;
     $value$plusargs("max-cycles=%d", max_cycles);
     $value$plusargs("loadmem=%s", loadmem);
     if (loadmem)
-      $readmemh(loadmem, mem.ram);
+      #0.1 $readmemh(loadmem, mem.ram);
     verbose = $test$plusargs("verbose");
 `ifdef DEBUG
     stats_active = $test$plusargs("stats");
@@ -180,7 +180,7 @@ module rocketTestHarness;
 
     //$fwrite(32'h80000002, "C%d: %d [%d] pc=[%h] W[r%d=%h][%d] R[r%d=%h] R[r%d=%h] inst=[%h] DASM(%h)\n", T135, T133, T132, T130, T128, T127, T126, T124, T97, T95, T9, T8, T1);
     if (reset == 0) begin
-      $fwrite(32'h80000002, "C%0d: PC=%h W[r%d=%h] WE=%d DASM(%h)\n",trace_count,dut.cpu.dpath.PC,dut.cpu.dpath.wb_reg_m,dut.cpu.dpath.wb_value,dut.cpu.dpath.wb_reg_we,dut.cpu.dpath.inst_m);
+      $fwrite(32'h80000002, "C%0d: PC=%h icache_re=%d  dcache_re=%h icache_dou=%h stall=%h dcache_we=%h\n",trace_count,dut.cpu.dpath.PC,dut.cpu.dpath.icache_re,dut.cpu.dpath.dcache_re,dut.cpu.dpath.icache_dout,dut.cpu.dpath.stall,dut.cpu.dpath.dcache_we);
     end
 
     if (max_cycles > 0 && trace_count > max_cycles) begin

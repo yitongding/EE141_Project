@@ -5,7 +5,7 @@ module MemWHB (
 	input [2:0] Funct,
 	input [6:0] Opcode,
 	input [31:0] MemWHBin,
-	output [31:0] MemWHBout
+	output reg [31:0] MemWHBout
 );
 	
 	always @(*) begin
