@@ -48,16 +48,13 @@ module datapath(
 //------------------------------------------------------------------
 //Instruction Stage
 //------------------------------------------------------------------
-	wire   [31:0]  PCF, InstrF, PCPlus4F;
-	reg    [31:0]  PCReg, PC, PCBranchM;
-	reg           PCSrcM;
-	reg	   [31:0]  RegFile [31:0];			// RegFile define
-	integer i;
+	wire   [31:0]  PC, PCF, InstrF, PCPlus4F,PCBranchM;
+	reg    [31:0]  PCReg;
+	wire           PCSrcM;
 	
-	always @(posedge clk) begin
+	always @(*) begin
 		if (reset) begin
 			PC = `PC_RESET;
-			PCBranchM = 0;
 		end else if (stall) begin
 			PC = PC;
 		end else if (PCSrcM) begin
@@ -68,11 +65,7 @@ module datapath(
 	end
 	
 	always @(posedge clk) begin
-		if (reset) begin
-			PCReg <= 0;
-		end else begin
-			PCReg <= PC;
-		end
+		PCReg <= PC;
 	end
 	
 	assign PCF = PCReg;
@@ -80,7 +73,13 @@ module datapath(
 //icache	
 	assign icache_addr = PC;
 	assign icache_re = ~stall;
-	assign InstrF = (stall)? `INSTR_NOP : icache_dout;
+	always @(*) begin
+		if (stall) begin
+			InstrF = `INSTR_NOP;
+		end else begin
+			InstrF = icache_dout;
+		end
+	end
 	
 //-------------------------------------------------------------------
 //Inst to Exe
@@ -88,32 +87,26 @@ module datapath(
 	reg    [31:0]  InstrE, PCE;
 	
 	always @(posedge clk) begin
-		if (reset) begin
-			PCE <= 0;
-			InstrE <= 0;
-		end else begin
-			PCE <= PCF;
-			InstrE <= InstrF;
-		end
+		PCE <= PCF;
+		InstrE <= InstrF;
 	end
 	
 //-------------------------------------------------------------------
 // Execute stage
 //-------------------------------------------------------------------
 
-	reg    [31:0]  SrcB;
-	reg    [4:0]   WriteRegE;
+	reg	   [31:0]  RegFile [31:0];			// RegFile define
 	wire   [4:0]   A1, A2, Rs1, Rs2, Rd;
 	wire   [31:0]  Imm;
-	wire   [31:0]  SrcA, ALUOutE, WriteDataE;
-	wire   [31:0]  ImmPro, PCBranchE;
+	wire   [31:0]  SrcA, SrcB, ALUOutE, WriteDataE;
+	wire   [31:0]  WriteRegE, ImmPro, PCBranchE;
 	wire   [6:0]   Opcode;
 	wire   [2:0]   Funct;
 	wire           Add_rshift_type, Branchout;
 	wire 		   PCSrcE;
 	
 	assign Rs1 = InstrE[19:15];
-	assign Rs2 = InstrE[24:20];
+	assign Rs2 = InstrE[14:20];
 	assign Rd  = InstrE[11:7];
 	assign Imm = InstrE[31:0];
 	assign A1 = Rs1;
@@ -128,23 +121,19 @@ module datapath(
 	assign datapath_contents = InstrE;
 	
 	always @(*) begin
-		if (reset) begin
-			SrcB = 0;
-			WriteRegE = 0;
-		end else begin
 		
-			if (ALUSrcE) begin
-				SrcB = ImmPro;
-			end else begin
-				SrcB = WriteDataE;
-			end
-			
-			if (RegDstE) begin
-				WriteRegE = Rd;
-			end else begin
-				WriteRegE = Rs2;
-			end
+		if (ALUSrcE) begin
+			SrcB = ImmPro;
+		end else begin
+			SrcB = WriteDataE;
 		end
+		
+		if (RegDstE) begin
+			WriteRegE = Rd;
+		end else begin
+			WriteRegE = Rs2;
+		end
+		
 	end
 	
 	ImmProcess Dut2(
@@ -178,56 +167,22 @@ module datapath(
 	reg [1:0] RegWriteSrcM;
 	reg RegWriteM;
 	reg [3:0] MemWriteM;
-	reg  [31:0] WD3;
-	wire [4:0]  A3;
-	
 	always @(posedge clk) begin
-		if (reset) begin
-			WriteRegM <= 0;
-			WriteDataM <= 0;
-			ALUOutM <= 0;
-			RegWriteSrcM <= 0;
-			RegWriteM <= 0;
-			MemWriteM  <= 0;
-			csr_tohost = 0;
-			
-		end else begin
-			WriteRegM <= WriteRegE;
-			PCBranchM <= PCBranchE;
-			WriteDataM <= WriteDataE;
-			ALUOutM <= ALUOutE;
-			RegWriteSrcM <= RegWriteSrcE;
-			MemWriteM <= MemWriteE;
-			PCSrcM <= PCSrcE;
-			RegWriteM <= RegWriteE;
-			if (Opcode == `OPC_CSR) begin
-				case (Funct)
-					`FNC_CSRRW: begin 
-						csr_tohost <= RegFile[Rs1];
-						RegFile[Rd] <= csr_tohost;
-					end
-					`FNC_CSRRWI: begin
-						csr_tohost <= ImmPro;
-					end
-					`FNC_CSRRC: begin
-						RegFile[Rd] <= csr_tohost;
-						csr_tohost <= csr_tohost & (32'hffffffff-RegFile[Rs1]);
-					end
-				endcase
-			end
-			if (RegWriteM) begin
-				RegFile[A3] = WD3;
-			end
-		end
-		
+		WriteRegM <= WriteRegE;
+		PCBranchM <= PCBranchE;
+		WriteDataM <= WriteDataE;
+		ALUOutM <= ALUOutE;
+		RegWriteSrcM = RegWriteSrcE;
+		MemWriteM = MemWriteE;
+		PCSrcM = PCSrcE;
+		RegWriteM = RegWriteE;
 	end
 	
 //-------------------------------------------------------------------
 // Memory stage
 //-------------------------------------------------------------------
 
-	wire [31:0] ReadDataM;
-
+	wire [31:0] A3, WD3, ReadDataM;
 
 	assign dcache_addr = ALUOutM;
 	assign A3          = WriteRegM;
@@ -258,6 +213,11 @@ module datapath(
 		endcase
 	end
 	
+	always @(posedge clk) begin
+		if (RegWriteM) begin
+			RegFile[A3] = WD3;
+		end
+	end
 	
 	
 

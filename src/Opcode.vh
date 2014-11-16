@@ -30,9 +30,6 @@
 `define OPC_ARI_RTYPE   7'b0110011
 `define OPC_ARI_ITYPE   7'b0010011
 
-`define OPC_CSR         7'b1110011
-
-
 
 // ***** Function codes *****
 
@@ -71,10 +68,5 @@
 `define FNC2_SUB        1'b1
 `define FNC2_SRL        1'b0
 `define FNC2_SRA        1'b1
-
-
-`define FNC_CSRRW       3'b001
-`define FNC_CSRRWI      3'b101
-`define FNC_CSRRC       3'b011
 
 `endif //OPCODE

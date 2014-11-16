@@ -17,12 +17,11 @@ module controller(
 	assign Add_rshift_type = datapath_contents[30];
 	
 	//output signal
-	wire [3:0] ALUop;
-	reg [3:0] MemWrite;
-	reg [1:0] RegWriteSrc;
-	reg 	   Branch, ALUsrc, RegWrite;
-	reg       RegDst;
-	reg       PCJALR;
+	wire [3:0] ALUop, MemWrite;
+	wire [1:0] RegWriteSrc;
+	wire 	   Branch, ALUsrc, RegWrite;
+	wire       RegDst;
+	wire       PCJALR;
 	
 	ALUdec Dut1(
 	.opcode(Opcode),
@@ -71,7 +70,7 @@ module controller(
 					`FNC_SW: MemWrite = 4'b1111;
 					default: MemWrite = 4'b0000;
 				endcase
-				RegWriteSrc = 2'b00;
+				RegWriteSrc = 2'bxx;
 				PCJALR = 1'b0;
 			end
 			`OPC_BRANCH: begin
@@ -80,7 +79,7 @@ module controller(
 				ALUsrc = 1'b0;
 				Branch = 1'b1;
 				MemWrite = 4'b0000;
-				RegWriteSrc = 2'b00;
+				RegWriteSrc = 2'bxx;
 				PCJALR = 1'b0;
 			end
 			`OPC_JAL: begin 
@@ -125,7 +124,7 @@ module controller(
 				ALUsrc = 1'bx;
 				Branch = 1'bx;
 				MemWrite = 4'b0000;
-				RegWriteSrc = 2'b00;
+				RegWriteSrc = 2'bxx;
 				PCJALR = 1'bx;
 			end
 		endcase

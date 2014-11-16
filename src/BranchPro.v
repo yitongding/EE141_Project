@@ -5,7 +5,7 @@ input [6:0] Opcode,
 input [2:0] Funct,
 input [31:0] A,
 input [31:0] B,
-output reg Branchout
+output Branchout
 );
 
 	always @(*) begin
