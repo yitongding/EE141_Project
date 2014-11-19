@@ -5,7 +5,7 @@ input [6:0] Opcode,
 input [2:0] Funct,
 input [31:0] A,
 input [31:0] B,
-output Branchout
+output reg Branchout
 );
 
 	always @(*) begin
@@ -19,6 +19,8 @@ output Branchout
 				`FNC_BGEU: Branchout = ($unsigned(A) < $unsigned(B))? 0:1;
 				default:   Branchout = 0;
 			endcase
+		end else if(Opcode == `OPC_JAL || Opcode ==`OPC_JALR) begin
+			Branchout = 1;
 		end else begin
 			Branchout = 0;
 		end

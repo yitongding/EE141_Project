@@ -1,3 +1,36 @@
+`define ceilLog2(x) ( \
+(x) > 2**30 ? 31 : \
+(x) > 2**29 ? 30 : \
+(x) > 2**28 ? 29 : \
+(x) > 2**27 ? 28 : \
+(x) > 2**26 ? 27 : \
+(x) > 2**25 ? 26 : \
+(x) > 2**24 ? 25 : \
+(x) > 2**23 ? 24 : \
+(x) > 2**22 ? 23 : \
+(x) > 2**21 ? 22 : \
+(x) > 2**20 ? 21 : \
+(x) > 2**19 ? 20 : \
+(x) > 2**18 ? 19 : \
+(x) > 2**17 ? 18 : \
+(x) > 2**16 ? 17 : \
+(x) > 2**15 ? 16 : \
+(x) > 2**14 ? 15 : \
+(x) > 2**13 ? 14 : \
+(x) > 2**12 ? 13 : \
+(x) > 2**11 ? 12 : \
+(x) > 2**10 ? 11 : \
+(x) > 2**9 ? 10 : \
+(x) > 2**8 ? 9 : \
+(x) > 2**7 ? 8 : \
+(x) > 2**6 ? 7 : \
+(x) > 2**5 ? 6 : \
+(x) > 2**4 ? 5 : \
+(x) > 2**3 ? 4 : \
+(x) > 2**2 ? 3 : \
+(x) > 2**1 ? 2 : \
+(x) > 2**0 ? 1 : 0)
+
 module cache #
 (
   parameter LINES = 64,
@@ -134,7 +167,7 @@ module cache #
   );
 
   wire [IDXMSB:DATAIDXLSB] data_idx =
-          next_state == STATE_WRITE ? r_cpu_req_addr[IDXMSB:DATAIDXLSB] : (next_state == STATE_READY ? cpu_req_addr[IDXMSB:DATAIDXLSB] :
+          next_state == STATE_WRITE || state == STATE_RESOLVE_MISS || (state == STATE_READY && ~cpu_req_val) ? r_cpu_req_addr[IDXMSB:DATAIDXLSB] : (next_state == STATE_READY ? cpu_req_addr[IDXMSB:DATAIDXLSB] :
           {r_cpu_req_addr[IDXMSB:IDXLSB],refill_count});
   wire [`MEM_DATA_BITS-1:0] data_out;
 
@@ -181,14 +214,12 @@ module cache #
   endgenerate
 
   generate
-    genvar i;
     for(i = 0; i < `MEM_DATA_BITS; i=i+1) begin : foo2
       assign mem_req_data_bits[i] = (i < (debug_msb+CPU_WIDTH+1)) & (i >= (debug_msb)) ? r_cpu_req_data[i-debug_msb] : 1'b0;
     end
   endgenerate
 
   generate
-    genvar i;
     for(i = 0; i < 16; i=i+1) begin : foo3
       assign mem_req_data_bits[i] = (i < (debug_msb+CPU_WIDTH+1)) & (i >= (debug_msb)) ? r_cpu_req_data[i-debug_msb] : 1'b0;
       assign mem_req_data_mask[i] = (i*8 < (debug_msb+CPU_WIDTH)) & (i*8 >= (debug_msb)) & r_cpu_req_write[i%4] ? 1'b1 : 1'b0;

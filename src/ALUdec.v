@@ -25,7 +25,7 @@ always @(*) begin
 	
 		`OPC_LUI: ALUop = `ALU_COPY_B;
 		`OPC_AUIPC,`OPC_JAL, `OPC_BRANCH, `OPC_LOAD, `OPC_STORE: ALUop = `ALU_ADD; 
-		`OPC_ARI_RTYPE, `OPC_ARI_ITYPE:
+		`OPC_ARI_RTYPE:
 			case (funct) 
 			
 				`FNC_ADD_SUB:
@@ -37,6 +37,23 @@ always @(*) begin
 				`FNC_SLL:  ALUop = `ALU_SLL;
 				`FNC_SLT:  ALUop = `ALU_SLT;
 				`FNC_SLTU: ALUop = `ALU_SLTU;
+				`FNC_XOR:  ALUop = `ALU_XOR;
+				`FNC_OR:   ALUop = `ALU_OR;
+				`FNC_AND:  ALUop = `ALU_AND;
+				`FNC_SRL_SRA:
+					if (add_rshift_type) begin
+						ALUop = `ALU_SRA;
+					end else begin
+						ALUop = `ALU_SRL;
+					end	
+					
+			endcase
+		`OPC_ARI_ITYPE:
+			case (funct)
+				`FNC_ADD_SUB:  ALUop = `ALU_ADD;
+				`FNC_SLT:  ALUop = `ALU_SLT;
+				`FNC_SLTU: ALUop = `ALU_SLTU;
+				`FNC_SLL:  ALUop = `ALU_SLL;
 				`FNC_XOR:  ALUop = `ALU_XOR;
 				`FNC_OR:   ALUop = `ALU_OR;
 				`FNC_AND:  ALUop = `ALU_AND;

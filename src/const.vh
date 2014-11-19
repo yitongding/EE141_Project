@@ -34,7 +34,7 @@
 `define SZ_CACHE $clog2(`CAP_CACHE)
 
 // PC address on reset
-`define PC_RESET 32'h00002000
+`define PC_RESET 32'h00001FFC
 
 // The NOP instruction
 `define INSTR_NOP {12'd0, 5'd0, `FNC_ADD_SUB, 5'd0, `OPC_ARI_ITYPE}

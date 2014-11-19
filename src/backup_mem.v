@@ -67,7 +67,7 @@ module BackupMemory
   // Ignore lower 2 bits and count ourselves if read, otherwise if write use the 
   wire do_write = mem_req_data_valid && mem_req_data_ready;
   // exact address delivered
-  wire [`ceilLog2(DEPTH)-1:0] ram_addr = state_busy  ? ( do_write ? addr :  {addr[`ceilLog2(DEPTH/DATA_CYCLES)-1:2], cnt} )
+  wire [`ceilLog2(DEPTH)-1:0] ram_addr = state_busy  ? ( do_write ? addr[`ceilLog2(DEPTH)-1:0] :  {addr[`ceilLog2(DEPTH/DATA_CYCLES)-1:2], cnt} )
                                                      : {mem_req_addr[`ceilLog2(DEPTH/DATA_CYCLES)-1:2], cnt};
   wire do_read = mem_req_valid && mem_req_ready && !mem_req_rw || state_busy && !state_rw;
 

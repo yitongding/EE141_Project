@@ -78,6 +78,7 @@ module ALUTestbench();
 
     // Testing logic:
     initial begin
+        $vcdpluson;
         for(i = 0; i < loops; i = i + 1)
         begin
             /////////////////////////////////////////////
@@ -131,159 +132,14 @@ module ALUTestbench();
             REFout = A + B;
             #1;
             checkOutput(opcode, funct, add_rshift_type);
-////////////////////////////////////////////////////////////////
-			opcode = `OPC_ARI_RTYPE;
-			funct = `FNC_ADD_SUB;
-			add_rshift_type = 0;
-			REFout = A + B;
-			#1;
-			checkOutput(opcode, funct, add_rshift_type);
 
-			opcode = `OPC_ARI_RTYPE;
-			funct = `FNC_ADD_SUB;
-			add_rshift_type = 1;
-			REFout = A - B;
-			#1;
-			checkOutput(opcode, funct, add_rshift_type);
-		 
-			opcode = `OPC_ARI_RTYPE;
-			funct = `FNC_SLL;
-			add_rshift_type = $random & 1'b1;
-			REFout = A << B[4:0];
-			#1;
-			checkOutput(opcode, funct, add_rshift_type);
-
-			opcode = `OPC_ARI_RTYPE;
-			funct = `FNC_SLT;
-			add_rshift_type = $random & 1'b1;
-			REFout = $signed(A) < $signed(B);
-			#1;
-			checkOutput(opcode, funct, add_rshift_type);
-
-			opcode = `OPC_ARI_RTYPE;
-			funct = `FNC_SLTU;
-			add_rshift_type = $random & 1'b1;
-			REFout = $unsigned(A) < $unsigned(B);
-			#1;
-			checkOutput(opcode, funct, add_rshift_type);
-
-			opcode = `OPC_ARI_RTYPE;
-			funct = `FNC_XOR;
-			add_rshift_type = $random & 1'b1;
-			REFout = A^B;
-			#1;
-			checkOutput(opcode, funct, add_rshift_type);
-
-			opcode = `OPC_ARI_RTYPE;
-			funct = `FNC_OR;
-			add_rshift_type = $random & 1'b1;
-			REFout = A | B;
-			#1;
-			checkOutput(opcode, funct, add_rshift_type);
-
-			opcode = `OPC_ARI_RTYPE;
-			funct = `FNC_AND;
-			add_rshift_type = $random & 1'b1;
-			REFout = A & B;
-			#1;
-			checkOutput(opcode, funct, add_rshift_type);
-		
-			opcode = `OPC_ARI_RTYPE;
-			funct = `FNC_SRL_SRA;
-			add_rshift_type = 0;
-			REFout = A >> B[4:0];
-			#1;
-			checkOutput(opcode, funct, add_rshift_type);
-
-			opcode = `OPC_ARI_RTYPE;
-			funct = `FNC_SRL_SRA;
-			add_rshift_type = 1;
-			REFout = $signed(A) >>> B[4:0];
-			#1;
-			checkOutput(opcode, funct, add_rshift_type);
-
-			opcode = `OPC_ARI_ITYPE;
-			funct = `FNC_ADD_SUB;
-			add_rshift_type = 0;
-			REFout = A + B;
-			#1;
-			checkOutput(opcode, funct, add_rshift_type);
-
-			opcode = `OPC_ARI_ITYPE;
-			funct = `FNC_ADD_SUB;
-			add_rshift_type = 1;
-			REFout = A - B;
-			#1;
-			checkOutput(opcode, funct, add_rshift_type);
-		 
-			opcode = `OPC_ARI_ITYPE;
-			funct = `FNC_SLL;
-			add_rshift_type = $random & 1'b1;
-			REFout = A << B[4:0];
-			#1;
-			checkOutput(opcode, funct, add_rshift_type);
-
-			opcode = `OPC_ARI_ITYPE;
-			funct = `FNC_SLT;
-			add_rshift_type = $random & 1'b1;
-			REFout = $signed(A) < $signed(B);
-			#1;
-			checkOutput(opcode, funct, add_rshift_type);
-
-			opcode = `OPC_ARI_ITYPE;
-			funct = `FNC_SLTU;
-			add_rshift_type = $random & 1'b1;
-			REFout = $unsigned(A) < $unsigned(B);
-			#1;
-			checkOutput(opcode, funct, add_rshift_type);
-
-			opcode = `OPC_ARI_ITYPE;
-			funct = `FNC_XOR;
-			add_rshift_type = $random & 1'b1;
-			REFout = A^B;
-			#1;
-			checkOutput(opcode, funct, add_rshift_type);
-
-			opcode = `OPC_ARI_ITYPE;
-			funct = `FNC_OR;
-			add_rshift_type = $random & 1'b1;
-			REFout = A | B;
-			#1;
-			checkOutput(opcode, funct, add_rshift_type);
-
-			opcode = `OPC_ARI_ITYPE;
-			funct = `FNC_AND;
-			add_rshift_type = $random & 1'b1;
-			REFout = A & B;
-			#1;
-			checkOutput(opcode, funct, add_rshift_type);
-		
-			opcode = `OPC_ARI_ITYPE;
-			funct = `FNC_SRL_SRA;
-			add_rshift_type = 0;
-			REFout = A >> B[4:0];
-			#1;
-			checkOutput(opcode, funct, add_rshift_type);
-
-			opcode = `OPC_ARI_ITYPE;
-			funct = `FNC_SRL_SRA;
-			add_rshift_type = 1;
-			REFout = $signed(A) >>> B[4:0];
-			#1;
-			checkOutput(opcode, funct, add_rshift_type);
         end
         ///////////////////////////////
         // Hard coded tests go here
         ///////////////////////////////
-	opcode = `OPC_ARI_RTYPE;
-        funct = `FNC_ADD_SUB;
-	add_rshift_type = 0;
-	A = 32'b11111111111111111111111111111111;
-	B = 1'b1;
-	REFout = 0;
-	#1;
-	checkOutput(opcode, funct, add_rshift_type);
+
         $display("\n\nALL TESTS PASSED!");
+        $vcdplusoff;
         $finish();
     end
 
