@@ -21,10 +21,10 @@ module Riscv141(
     feel free to modify anything internal to this module, 
     including the inputs and outputs of the controller and datapath
 */
-    wire [63:0] datapath_contents;
+    wire [97:0] datapath_contents;
     wire [10:0]   dpath_controls_i;
     wire [3:0]  exec_controls_x;
-    wire [4:0]   hazard_controls;
+    wire [5:0]   hazard_controls;
 
     controller ctrl(
         .datapath_contents(datapath_contents),

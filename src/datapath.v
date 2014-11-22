@@ -5,8 +5,8 @@ module datapath(
     input           clk, reset, stall,
     input   [10:0]  dpath_controls_i,
     input   [3:0]   exec_controls_x,
-    input   [4:0]   hazard_controls,
-    output  [63:0]  datapath_contents,
+    input   [5:0]   hazard_controls,
+    output  [97:0]  datapath_contents,
 
     // Memory system connections
     output [31:0]   dcache_addr,
@@ -42,8 +42,9 @@ module datapath(
 	assign MemWriteE = dpath_controls_i[5:2];
 	assign ALUop = exec_controls_x;
 	
-	wire DhazardRs1, DhazardRs2, LHazardRs1, LHazardRs2, LHazardEn;
+	wire DhazardSt, DhazardRs1, DhazardRs2, LHazardRs1, LHazardRs2, LHazardEn;
 	
+	assign DhazardSt  = hazard_controls[5]; 
 	assign DhazardRs1 = hazard_controls[4];
 	assign DhazardRs2 = hazard_controls[3];
 	assign LHazardRs1 = hazard_controls[2];
@@ -70,6 +71,8 @@ module datapath(
 			end else begin
 				PC = PCPlus4F;
 			end
+		end else begin
+			PC = PCReg; 
 		end
 	end
 	
@@ -96,10 +99,12 @@ module datapath(
 	reg    [31:0]  InstrE, PCE, InstrM;
 	
 	always @(posedge clk) begin
-		if (~stall && ~LHazardEn) begin
+		if (~stall) begin
 			if (reset) begin
 				PCE <= 0;
 				InstrE <= 0;
+			end else if (LHazardEn) begin
+				InstrE <= `INSTR_NOP;
 			end else if (PCSrcE) begin
 				PCE <= PCF;
 				InstrE <= `INSTR_NOP;
@@ -124,6 +129,7 @@ module datapath(
 	wire   [6:0]   Opcode;
 	wire   [2:0]   Funct;
 	wire           Add_rshift_type, Branchout;
+	wire   [1:0]   Store_Address;
 	
 	assign Rs1 = InstrE[19:15];
 	assign Rs2 = InstrE[24:20];
@@ -136,7 +142,8 @@ module datapath(
 	assign Funct = InstrE[14:12];
 	assign Add_rshift_type = InstrE[30];
 	assign PCSrcE = Branchout & BranchE;
-	assign datapath_contents = {InstrM, InstrE};
+	assign Store_Address = (stall && dcache_re)? ALUOutM[1:0] : ALUOutE[1:0];
+	assign datapath_contents = {Store_Address[1:0], InstrF, InstrM, InstrE};
 	
 	always @(*) begin
 		if (reset) begin
@@ -215,8 +222,6 @@ module datapath(
 				csr_tohost <= 0;
 				InstrM <= 0;
 				PCM <= 0;
-			end else if (LHazardEn) begin
-				InstrM <= InstrE;
 			end else begin
 				PCM <= PCE;
 				WriteRegM <= WriteRegE;
@@ -256,21 +261,32 @@ module datapath(
 //-------------------------------------------------------------------
 
 	wire [31:0] ReadDataM;
+	wire   [6:0]   OpcodeM;
+	wire   [2:0]   FunctM;
 
 
-	assign dcache_addr = ALUOutE;
+	assign dcache_addr = (stall && dcache_re)? ALUOutM : ALUOutE;
 	assign A3          = WriteRegM;
-	assign dcache_we   = MemWriteE;
-	assign dcache_re   = (RegWriteSrcE == 2'b01);
-	assign dcache_din  = RegFile [A2];
+	assign dcache_we   = MemWriteE & {4{~stall}};
+	assign dcache_re   = (RegWriteSrcE == 2'b01) || ((RegWriteSrcM == 2'b01)&&stall );
+	//assign dcache_din  = (DhazardSt)? ALUOutM : RegFile [A2];
+	assign OpcodeM     = InstrM[6:0];
+	assign FunctM      = InstrM[14:12];
 	
 	MemWHB Dut4 (
-		.Funct(Funct),
-		.Opcode(Opcode),
+		.Funct(FunctM),
+		.Opcode(OpcodeM),
+		.Adr(ALUOutM),
 		.MemWHBin(dcache_dout),
 		.MemWHBout(ReadDataM)
 	);
-	
+	MemWHB Dut7 (
+		.Funct(Funct),
+		.Opcode(Opcode),
+		.Adr(dcache_addr),
+		.MemWHBin((DhazardSt)? ALUOutM : RegFile [A2]),
+		.MemWHBout(dcache_din)
+	);
 	
 	always @(*) begin
 		case (RegWriteSrcM)

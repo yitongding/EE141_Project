@@ -2,19 +2,21 @@
 `include "const.vh"
 
 module controller(
-    input wire  [63:0] datapath_contents,
+    input wire  [97:0] datapath_contents,
     output wire [10:0] dpath_controls_i,
     output wire [3:0] exec_controls_x,
-    output wire [4:0] hazard_controls
+    output wire [5:0] hazard_controls
 );
 	//input signal
 	wire [6:0] Opcode;
 	wire [2:0] Funct;
 	wire       Add_rshift_type;
+	wire [1:0] Address;
+	
 	assign Opcode = datapath_contents[6:0];
 	assign Funct = datapath_contents[14:12];
 	assign Add_rshift_type = datapath_contents[30];
-	
+	assign Address = datapath_contents[97:96];
 	//output signal
 	wire [3:0] ALUop;
 	reg [3:0] MemWrite;
@@ -65,8 +67,19 @@ module controller(
 				ALUsrc = 1'b1;
 				Branch = 1'b0;
 				case (Funct)
-					`FNC_SB: MemWrite = 4'b0001;
-					`FNC_SH: MemWrite = 4'b0011;
+					`FNC_SB: 
+						case (Address)
+							2'b00: MemWrite = 4'b0001;
+							2'b01: MemWrite = 4'b0010;
+							2'b10: MemWrite = 4'b0100;
+							2'b11: MemWrite = 4'b1000;
+						endcase
+					`FNC_SH: 
+						case (Address)
+							2'b00: MemWrite = 4'b0011;
+							2'b01: MemWrite = 4'b0110;
+							2'b10: MemWrite = 4'b1100;
+						endcase
 					`FNC_SW: MemWrite = 4'b1111;
 					default: MemWrite = 4'b0000;
 				endcase
@@ -141,7 +154,7 @@ module controller(
 	assign New_Rs2 = datapath_contents[24:20];
 	assign Old_Rd = datapath_contents[43:39];
 	assign Old_Opcode = datapath_contents[38:32];
-	reg  DhazardRs1, DhazardRs2;
+	reg  DhazardRs1, DhazardRs2, DhazardSt;
 	
 	always @(*) begin
 		if(Old_Opcode != `OPC_BRANCH && Old_Opcode != `OPC_STORE && Old_Opcode !=`OPC_JAL) begin
@@ -149,18 +162,27 @@ module controller(
 				`OPC_ARI_RTYPE, `OPC_BRANCH: begin 
 					DhazardRs1 = (New_Rs1 == Old_Rd) && (Old_Rd != 0);
 					DhazardRs2 = (New_Rs2 == Old_Rd) && (Old_Rd != 0);
+					DhazardSt  = 0;
 				end
-				`OPC_ARI_ITYPE, `OPC_LOAD, `OPC_STORE, `OPC_JALR: begin
+				`OPC_ARI_ITYPE, `OPC_LOAD, `OPC_JALR: begin
 					DhazardRs1 = (New_Rs1 == Old_Rd) && (Old_Rd != 0);
 					DhazardRs2 = 1'b0;
+					DhazardSt  = 0;
+				end
+				`OPC_STORE: begin
+					DhazardRs1 = (New_Rs1 == Old_Rd) && (Old_Rd != 0);
+					DhazardRs2 = 1'b0;
+					DhazardSt  = (New_Rs2 == Old_Rd) && (Old_Rd != 0);
 				end
 				`OPC_JAL, `OPC_AUIPC, `OPC_LUI: begin 
 					DhazardRs1 = 1'b0;
 					DhazardRs2 = 1'b0;
+					DhazardSt  = 0;
 				end
 				default: begin 
 					DhazardRs1 = 1'b0;
 					DhazardRs2 = 1'b0;
+					DhazardSt  = 0;
 				end
 			endcase
 		end else begin
@@ -173,10 +195,12 @@ module controller(
 //Load Hazard
 //------------------
 	reg LHazardRs1, LHazardRs2, LHazardEn;
+	wire [6:0] New_Opcode;
+	assign New_Opcode = datapath_contents [70:64];
 	
 	always @(*) begin
-		if (Old_Opcode == `OPC_LOAD) begin
-			case (Opcode)
+		if (Opcode == `OPC_LOAD) begin
+			case (New_Opcode)
 				`OPC_ARI_RTYPE, `OPC_BRANCH: begin 
 					LHazardRs1 = New_Rs1 == Old_Rd;
 					LHazardRs2 = New_Rs2 == Old_Rd;
@@ -205,6 +229,6 @@ module controller(
 		end	
 	end
 	
-	assign hazard_controls = {DhazardRs1, DhazardRs2, LHazardRs1, LHazardRs2, LHazardEn};
+	assign hazard_controls = {DhazardSt, DhazardRs1, DhazardRs2, LHazardRs1, LHazardRs2, LHazardEn};
 	
 endmodule
