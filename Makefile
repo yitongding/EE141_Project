@@ -1,195 +1,252 @@
 #=======================================================================
-# UCB VLSI FLOW: Makefile for vcs-sim-rtl
+# UCB VLSI FLOW: Makefile for icc-par
 #-----------------------------------------------------------------------
-# Yunsup Lee (yunsup@cs.berkeley.edu)
-#
-# This makefile will build a rtl simulator and run various tests to
-# verify proper functionality.
-#
 
+
+default: all
+basedir  = ../..
 include ../Makefrag
-
-default : all
-
-base_dir  = ..
-sim_dir = .
-output_dir = output
-CONFIG = vlsi
-timeout_cycles = 10000
-disasm := 2>
-which_disasm := $(shell which riscv-dis)
-ifneq ($(which_disasm),)
-	disasm := 3>&1 1>&2 2>&3 | $(which_disasm) $(DISASM_EXTENSION) >
-endif
 
 #--------------------------------------------------------------------
 # Sources
 #--------------------------------------------------------------------
 
-# Verilog sources
+# Specify what the toplevel verilog module is
 
-srcdir = $(base_dir)/src
-sim_vsrcs = \
-	$(srcdir)/const.vh \
-	$(srcdir)/ALU.v \
-	$(srcdir)/ALUdec.v \
-	$(srcdir)/ALUop.vh \
-	$(srcdir)/backup_mem.v \
-	$(srcdir)/riscv_arbiter.v \
-	$(srcdir)/Cache.v \
-	$(srcdir)/controller.v \
-	$(srcdir)/datapath.v \
-	$(srcdir)/Memory141.v \
-	$(srcdir)/Opcode.vh \
-	$(srcdir)/Riscv141.v \
-	$(srcdir)/riscv_test_harness.v \
-	$(srcdir)/riscv_top.v \
-	$(srcdir)/BranchPro.v \
-	$(srcdir)/ImmProcess.v \
-	$(srcdir)/MemWHB.v \
-	$(UCB_VLSI_HOME)/stdcells/synopsys-32nm/multi_vt/verilog/sram.v \
+toplevel = riscv_top
+#Riscv141
+testharness = rocketTestHarness
+toplevelinst = dut
 
 #--------------------------------------------------------------------
 # Build rules
 #--------------------------------------------------------------------
 
+icc_exec                := icc_shell -64bit
+build_suffix            := $(shell date +%Y-%m-%d_%H-%M)
+build_iccdp_dir         := build-iccdp-$(build_suffix)
+build_icc_dir           := build-icc-$(build_suffix)
+cur_build_iccdp_dir     := current-iccdp
+cur_build_icc_dir       := current-icc
+reports_dir             := reports
+results_dir             := results
+log_dir                 := log
+stdcells_dir            := $(UCB_VLSI_HOME)/stdcells/$(UCB_STDCELLS)
+techfile_dir            := $(stdcells_dir)/techfile
+db_cells_dir            := $(stdcells_dir)/db
+mw_cells_dir            := $(stdcells_dir)/mw
+tluplus_cells_dir       := $(stdcells_dir)/tluplus
 
-VCS = vcs -full64
+dc_dir                  := ../dc-syn/current-dc/$(results_dir)
+dc_ddc                  := $(dc_dir)/$(toplevel).mapped.ddc
+dc_timestamp            := $(dc_dir)/../timestamp
 
-# If don't use initreg/initmem, then get X propagated
-# through everywhere
-VCS_OPTS = -notice -line +lint=all,noVCDE,noONGS,noUI +warn=noTMR -error=PCWM-L -timescale=1ns/10ps -quiet \
-	+incdir+$(srcdir) \
-	+v2k +vcs+lic+wait \
-	+vcs+initreg+0 \
-	+vcs+initmem+0 \
-	+rad \
-	-top rocketTestHarness \
-	-debug_pp \
-	+define+CLOCK_PERIOD=$(vcs_clock_period) $(sim_vsrcs) \
+iccdp_timestamp         := $(cur_build_iccdp_dir)/timestamp
+init_design_icc         := $(cur_build_iccdp_dir)/init_design_icc
 
-#--------------------------------------------------------------------
-# Build the simulator
-#--------------------------------------------------------------------
+icc_timestamp           := $(cur_build_icc_dir)/timestamp
+place_opt_icc           := $(cur_build_icc_dir)/place_opt_icc
+clock_opt_cts_icc       := $(cur_build_icc_dir)/clock_opt_cts_icc
+clock_opt_psyn_icc      := $(cur_build_icc_dir)/clock_opt_psyn_icc
+clock_opt_route_icc     := $(cur_build_icc_dir)/clock_opt_route_icc
+route_icc               := $(cur_build_icc_dir)/route_icc
+route_opt_icc           := $(cur_build_icc_dir)/route_opt_icc
+chip_finish_icc         := $(cur_build_icc_dir)/chip_finish_icc
+outputs_icc             := $(cur_build_icc_dir)/outputs_icc
+ic                      := $(cur_build_icc_dir)/ic
 
-simv = $(sim_dir)/simv-$(CONFIG)
-$(simv) : $(sim_vsrcs)
-	cd $(sim_dir) && \
-	$(VCS) $(VCS_OPTS) -o $(simv) \
+vars_tcl                := setup/common_setup.tcl setup/icc_setup.tcl icc_scripts/check_icc_rm_values.tcl icc_scripts/mapfile setup/constraints_icc.tcl
+makegen_tcl             := make_generated_vars.tcl
+floorplan_tcl           := floorplan/floorplan.tcl floorplan/saed_32nm.tpl floorplan/pads.tcl
 
-simv_debug = $(sim_dir)/simv-$(CONFIG)-debug
-$(simv_debug) : $(sim_vsrcs)
-	cd $(sim_dir) && \
-	$(VCS) $(VCS_OPTS) -o $(simv_debug) \
-	+define+DEBUG -debug_pp \
+init_design_icc_tcl     := icc_scripts/init_design_icc.tcl
+init_design_misc_tcl    := icc_scripts/common_optimization_settings_icc.tcl icc_scripts/common_placement_settings_icc.tcl
 
+place_opt_icc_tcl       := icc_scripts/place_opt_icc.tcl
+place_opt_misc_tcl      := icc_scripts/common_optimization_settings_icc.tcl icc_scripts/common_placement_settings_icc.tcl icc_scripts/common_cts_settings_icc.tcl
+clock_opt_cts_icc_tcl   := icc_scripts/clock_opt_cts_icc.tcl
+clock_opt_cts_misc_tcl  := icc_scripts/common_optimization_settings_icc.tcl icc_scripts/common_placement_settings_icc.tcl icc_scripts/common_cts_settings_icc.tcl icc_scripts/common_post_cts_timing_settings.tcl
+clock_opt_psyn_icc_tcl  := icc_scripts/clock_opt_psyn_icc.tcl
+clock_opt_psyn_misc_tcl := icc_scripts/common_optimization_settings_icc.tcl icc_scripts/common_placement_settings_icc.tcl icc_scripts/common_cts_settings_icc.tcl icc_scripts/common_post_cts_timing_settings.tcl
+clock_opt_route_icc_tcl := icc_scripts/clock_opt_route_icc.tcl
+clock_opt_route_misc_tcl:= icc_scripts/common_optimization_settings_icc.tcl icc_scripts/common_placement_settings_icc.tcl icc_scripts/common_cts_settings_icc.tcl icc_scripts/common_post_cts_timing_settings.tcl icc_scripts/common_route_si_settings_zrt_icc.tcl
+route_icc_tcl           := icc_scripts/route_icc.tcl
+route_misc_tcl          := icc_scripts/common_optimization_settings_icc.tcl icc_scripts/common_placement_settings_icc.tcl icc_scripts/common_post_cts_timing_settings.tcl icc_scripts/common_route_si_settings_zrt_icc.tcl
+route_opt_icc_tcl       := icc_scripts/route_opt_icc.tcl
+route_opt_misc_tcl      := icc_scripts/common_optimization_settings_icc.tcl icc_scripts/common_placement_settings_icc.tcl icc_scripts/common_post_cts_timing_settings.tcl icc_scripts/common_route_si_settings_zrt_icc.tcl
+chip_finish_icc_tcl     := icc_scripts/chip_finish_icc.tcl
+chip_finish_misc_tcl    := icc_scripts/common_optimization_settings_icc.tcl icc_scripts/common_placement_settings_icc.tcl icc_scripts/common_post_cts_timing_settings.tcl icc_scripts/common_route_si_settings_zrt_icc.tcl
+outputs_icc_tcl         := icc_scripts/outputs_icc.tcl
+outputs_misc_tcl        := icc_scripts/find_regs.tcl
 
-tests_isa_dir = $(base_dir)/tests/isa
+vars = \
+	set DESIGN_NAME                 "$(toplevel)";\n \
+        set STRIP_PATH                  "$(testharness)/$(toplevelinst)";\n \
+	set ADDITIONAL_SEARCH_PATH      "$(db_cells_dir) $(mw_cells_dir) ../$(dc_dir) ";\n \
+	set TARGET_LIBRARY_FILES        "$(target_library_files) $(db_sram_libs)";\n \
+	set MW_REFERENCE_LIB_DIRS       "$(addprefix $(mw_cells_dir)/, $(mw_ref_libs)) $(mw_sram_libs)";\n \
+        set MIN_LIBRARY_FILES           "$(min_library)";\n \
+	set TECH_FILE                   "$(techfile_dir)/techfile.tf";\n \
+	set MAP_FILE                    "$(techfile_dir)/tech2itf.map";\n \
+	set TLUPLUS_MAX_FILE            "$(tluplus_cells_dir)/max.tluplus";\n \
+	set TLUPLUS_MIN_FILE            "$(tluplus_cells_dir)/min.tluplus";\n \
+	set REPORTS_DIR                 "$(reports_dir)";\n \
+	set RESULTS_DIR                 "$(results_dir)";\n \
+	set FILLER_CELL                 "$(filler_cells)";\n \
+	set REPORTING_EFFORT            "OFF";\n \
+	set PNR_EFFORT                  "low";\n \
+	set USE_ICC_CONSTRAINTS			"TRUE";\n \
+	set CLOCK_PERIOD                "$(icc_clock_period)";\n \
+	set CLOCK_UNCERTAINTY           "$(icc_clock_uncertainty)";\n \
+	set INPUT_DELAY                 "$(icc_input_delay)";\n \
+	set OUTPUT_DELAY                "$(icc_output_delay)";\n \
+	set ICC_CONSTRAINTS_FILE		"constraints_icc.tcl"
 
-	#asmtest \
+iccdp_vars = \
+	set ICC_FLOORPLAN_CEL            "init_design_icc";\n \
 
-asm_p_tests = \
-	rv32ui-p-add \
-	rv32ui-p-addi \
-	rv32ui-p-and \
-	rv32ui-p-andi \
-	rv32ui-p-auipc \
-	rv32ui-p-beq \
-	rv32ui-p-bge \
-	rv32ui-p-bgeu \
-	rv32ui-p-blt \
-	rv32ui-p-bltu \
-	rv32ui-p-bne \
-	rv32ui-p-j \
-	rv32ui-p-jal \
-	rv32ui-p-jalr \
-	rv32ui-p-lb \
-	rv32ui-p-lbu \
-	rv32ui-p-lh \
-	rv32ui-p-lhu \
-	rv32ui-p-lui \
-	rv32ui-p-lw \
-	rv32ui-p-or \
-	rv32ui-p-ori \
-	rv32ui-p-sb \
-	rv32ui-p-sh \
-	rv32ui-p-simple \
-	rv32ui-p-sll \
-	rv32ui-p-slli \
-	rv32ui-p-slt \
-	rv32ui-p-slti \
-	rv32ui-p-sra \
-	rv32ui-p-srai \
-	rv32ui-p-srl \
-	rv32ui-p-srli \
-	rv32ui-p-sub \
-	rv32ui-p-sw \
-	rv32ui-p-xor \
-	rv32ui-p-xori \
+icc_vars = \
+	set ICC_FLOORPLAN_CEL            "init_design_icc";\n \
 
+$(iccdp_timestamp): $(dc_timestamp) $(vars_tcl) $(floorplan_tcl) $(init_design_icc_tcl) $(init_design_misc_tcl)
+	mkdir $(build_iccdp_dir)
+	rm -f $(cur_build_iccdp_dir)
+	ln -s $(build_iccdp_dir) $(cur_build_iccdp_dir)
+	cp ../Makefrag $(cur_build_iccdp_dir)
+	cp $(dc_timestamp) $(cur_build_iccdp_dir)/timestamp-dc
+	date > $(iccdp_timestamp)
 
-#--------------------------------------------------------------------
-# Run
-#--------------------------------------------------------------------
+$(init_design_icc): $(iccdp_timestamp)
+	cp $(init_design_icc_tcl) $(init_design_misc_tcl) $(vars_tcl) $(floorplan_tcl) $(cur_build_iccdp_dir)
+	echo -e '$(vars)' > $(cur_build_iccdp_dir)/$(makegen_tcl)
+	echo -e '$(iccdp_vars)' >> $(cur_build_iccdp_dir)/$(makegen_tcl)
+	cd $(cur_build_iccdp_dir); \
+	mkdir -p $(reports_dir) $(results_dir) $(log_dir); \
+	$(icc_exec) -f $(notdir $(init_design_icc_tcl)) | tee -i $(log_dir)/$(notdir $(init_design_icc)).log; \
+	date > $(notdir $(init_design_icc))
 
-seed = $(shell date +%s)
-exec_simv = $(simv) -q +ntb_random_seed_automatic
-exec_simv_debug = $(simv_debug) -q +ntb_random_seed_automatic
+$(flat_dp): $(iccdp_timestamp) $(init_design_icc)
+	cp $(flat_dp_tcl) $(flat_dp_misc_tcl) $(vars_tcl) $(cur_build_iccdp_dir)
+	echo -e '$(vars)' > $(cur_build_iccdp_dir)/$(makegen_tcl)
+	echo -e '$(iccdp_vars)' >> $(cur_build_iccdp_dir)/$(makegen_tcl)
+	cd $(cur_build_iccdp_dir); \
+	mkdir -p $(reports_dir) $(results_dir) $(log_dir); \
+	$(icc_exec) -f $(notdir $(flat_dp_tcl)) | tee -i $(log_dir)/$(notdir $(flat_dp)).log; \
+	date > $(notdir $(flat_dp))
 
-#--------------------------------------------------------------------
-# Run
-#--------------------------------------------------------------------
-asm_tests_out = $(foreach test, $(asm_p_tests), $(output_dir)/$(test).out)
+$(icc_timestamp): $(dc_timestamp) $(iccdp_timestamp) $(vars_tcl) $(place_opt_icc_tcl) $(place_opt_misc_tcl) $(clock_opt_cts_icc_tcl) $(clock_opt_cts_misc_tcl) $(clock_opt_psyn_icc_tcl) $(clock_opt_psyn_misc_tcl) $(clock_opt_route_icc_tcl) $(clock_opt_route_misc_tcl) $(route_icc_tcl) $(route_misc_tcl) $(route_opt_icc_tcl) $(route_opt_misc_tcl) $(chip_finish_icc_tcl) $(chip_finish_misc_tcl) $(outputs_icc_tcl) $(outputs_misc_tcl)
+	mkdir $(build_icc_dir)
+	rm -f $(cur_build_icc_dir)
+	ln -s $(build_icc_dir) $(cur_build_icc_dir)
+	cp setup/start_icc_gui $(cur_build_icc_dir)/start_gui
+	sed -i -e 's/_DESIGN_NAME_/$(toplevel)/' $(cur_build_icc_dir)/start_gui
+	cp $(dc_timestamp) $(cur_build_icc_dir)/timestamp-dc
+	cp $(iccdp_timestamp) $(cur_build_icc_dir)/timestamp-iccdp
+	cp ../Makefrag $(cur_build_icc_dir)
+	cp -R $(cur_build_iccdp_dir)/$(toplevel)_LIB $(cur_build_icc_dir)
+	date > $(icc_timestamp)
 
-asm_tests_vcd = $(foreach test, $(asm_p_tests), $(output_dir)/$(test).vcd)
+$(place_opt_icc): $(icc_timestamp)
+	cp $(place_opt_icc_tcl) $(place_opt_misc_tcl) $(vars_tcl) $(cur_build_icc_dir)
+	echo -e '$(vars)' > $(cur_build_icc_dir)/$(makegen_tcl)
+	echo -e '$(icc_vars)' >> $(cur_build_icc_dir)/$(makegen_tcl)
+	cd $(cur_build_icc_dir); \
+	mkdir -p $(reports_dir) $(results_dir) $(log_dir); \
+	$(icc_exec) -f $(notdir $(place_opt_icc_tcl)) | tee -i $(log_dir)/$(notdir $(place_opt_icc)).log; \
+	date > $(notdir $(place_opt_icc))
 
-asm_tests_vpd = $(foreach test, $(asm_p_tests), $(output_dir)/$(test).vpd)
+$(clock_opt_cts_icc): $(icc_timestamp) $(place_opt_icc)
+	cp $(clock_opt_cts_icc_tcl) $(clock_opt_cts_misc_tcl) $(vars_tcl) $(cur_build_icc_dir)
+	echo -e '$(vars)' > $(cur_build_icc_dir)/$(makegen_tcl)
+	echo -e '$(icc_vars)' >> $(cur_build_icc_dir)/$(makegen_tcl)
+	cd $(cur_build_icc_dir); \
+	mkdir -p $(reports_dir) $(results_dir) $(log_dir); \
+	$(icc_exec) -f $(notdir $(clock_opt_cts_icc_tcl)) | tee -i $(log_dir)/$(notdir $(clock_opt_cts_icc)).log; \
+	date > $(notdir $(clock_opt_cts_icc))
 
-asm_tests_saif = $(foreach test, $(asm_p_tests), $(output_dir)/$(test).saif)
+$(clock_opt_psyn_icc): $(icc_timestamp) $(clock_opt_cts_icc)
+	cp $(clock_opt_psyn_icc_tcl) $(clock_opt_psyn_misc_tcl) $(vars_tcl) $(cur_build_icc_dir)
+	echo -e '$(vars)' > $(cur_build_icc_dir)/$(makegen_tcl)
+	echo -e '$(icc_vars)' >> $(cur_build_icc_dir)/$(makegen_tcl)
+	cd $(cur_build_icc_dir); \
+	mkdir -p $(reports_dir) $(results_dir) $(log_dir); \
+	$(icc_exec) -f $(notdir $(clock_opt_psyn_icc_tcl)) | tee -i $(log_dir)/$(notdir $(clock_opt_psyn_icc)).log; \
+	date > $(notdir $(clock_opt_psyn_icc))
 
-$(output_dir)/%.out: $(tests_isa_dir)/%.hex  $(simv)
-	mkdir -p $(output_dir)
-	cd $(sim_dir) && $(exec_simv)  +verbose +max-cycles=$(timeout_cycles) +loadmem=$< $(disasm) $@ && [ $$PIPESTATUS -eq 0 ]
+$(clock_opt_route_icc): $(icc_timestamp) $(clock_opt_psyn_icc)
+	cp $(clock_opt_route_icc_tcl) $(clock_opt_route_misc_tcl) $(vars_tcl) $(cur_build_icc_dir)
+	echo -e '$(vars)' > $(cur_build_icc_dir)/$(makegen_tcl)
+	echo -e '$(icc_vars)' >> $(cur_build_icc_dir)/$(makegen_tcl)
+	cd $(cur_build_icc_dir); \
+	mkdir -p $(reports_dir) $(results_dir) $(log_dir); \
+	$(icc_exec) -f $(notdir $(clock_opt_route_icc_tcl)) | tee -i $(log_dir)/$(notdir $(clock_opt_route_icc)).log; \
+	date > $(notdir $(clock_opt_route_icc))
 
-$(output_dir)/%.vcd: $(tests_isa_dir)/%.hex  $(simv_debug)
-	mkdir -p $(output_dir)
-	cd $(sim_dir) && $(exec_simv_debug)  +verbose +vcdfile=$@ +max-cycles=$(timeout_cycles) +loadmem=$< $(disasm) $(patsubst %.vcd,%.out,$@) && [ $$PIPESTATUS -eq 0 ]
+$(route_icc): $(icc_timestamp) $(clock_opt_route_icc)
+	cp $(route_icc_tcl) $(route_misc_tcl) $(vars_tcl) $(cur_build_icc_dir)
+	echo -e '$(vars)' > $(cur_build_icc_dir)/$(makegen_tcl)
+	echo -e '$(icc_vars)' >> $(cur_build_icc_dir)/$(makegen_tcl)
+	cd $(cur_build_icc_dir); \
+	mkdir -p $(reports_dir) $(results_dir) $(log_dir); \
+	$(icc_exec) -f $(notdir $(route_icc_tcl)) | tee -i $(log_dir)/$(notdir $(route_icc)).log; \
+	date > $(notdir $(route_icc))
 
-$(output_dir)/%.vpd: $(tests_isa_dir)/%.hex  $(simv_debug)
-	mkdir -p $(output_dir)
-	cd $(sim_dir) && $(exec_simv_debug)  +verbose +vcdplusfile=$@ +max-cycles=$(timeout_cycles) +loadmem=$< $(disasm) $(patsubst %.vpd,%.out,$@) && [ $$PIPESTATUS -eq 0 ]
+$(route_opt_icc): $(icc_timestamp) $(route_icc)
+	cp $(route_opt_icc_tcl) $(route_opt_misc_tcl) $(vars_tcl) $(cur_build_icc_dir)
+	echo -e '$(vars)' > $(cur_build_icc_dir)/$(makegen_tcl)
+	echo -e '$(icc_vars)' >> $(cur_build_icc_dir)/$(makegen_tcl)
+	cd $(cur_build_icc_dir); \
+	mkdir -p $(reports_dir) $(results_dir) $(log_dir); \
+	$(icc_exec) -f $(notdir $(route_opt_icc_tcl)) | tee -i $(log_dir)/$(notdir $(route_opt_icc)).log; \
+	date > $(notdir $(route_opt_icc))
 
-$(output_dir)/%.saif: $(output_dir)/%.hex  $(simv_debug)
-	mkdir -p $(output_dir)
-	cd $(sim_dir) && rm -f $(output_dir)/output_dirpipe-$*.vcd && vcd2saif -input $(output_dir)/pipe-$*.vcd -pipe "$(exec_simv_debug)  +verbose +vcdfile=$(output_dir)/pipe-$*.vcd +max-cycles=$(timeout_cycles) +loadmem=$<" -output $@ > $(patsubst %.saif,%.out,$@) 2>&1
+$(chip_finish_icc): $(icc_timestamp) $(route_opt_icc)
+	cp $(chip_finish_icc_tcl) $(chip_finish_misc_tcl) $(vars_tcl) $(cur_build_icc_dir)
+	echo -e '$(vars)' > $(cur_build_icc_dir)/$(makegen_tcl)
+	echo -e '$(icc_vars)' >> $(cur_build_icc_dir)/$(makegen_tcl)
+	cd $(cur_build_icc_dir); \
+	mkdir -p $(reports_dir) $(results_dir) $(log_dir); \
+	$(icc_exec) -f $(notdir $(chip_finish_icc_tcl)) | tee -i $(log_dir)/$(notdir $(chip_finish_icc)).log; \
+	date > $(notdir $(chip_finish_icc))
 
+$(outputs_icc): $(icc_timestamp) $(chip_finish_icc)
+	cp $(outputs_icc_tcl) $(outputs_misc_tcl) $(vars_tcl) $(cur_build_icc_dir)
+	echo -e '$(vars)' > $(cur_build_icc_dir)/$(makegen_tcl)
+	echo -e '$(icc_vars)' >> $(cur_build_icc_dir)/$(makegen_tcl)
+	cd $(cur_build_icc_dir); \
+	mkdir -p $(reports_dir) $(results_dir) $(log_dir); \
+	$(icc_exec) -f $(notdir $(outputs_icc_tcl)) | tee -i $(log_dir)/$(notdir $(outputs_icc)).log; \
+	date > $(notdir $(outputs_icc))
 
-run-asm-tests: $(asm_tests_out)
-	@echo; perl -ne 'print "  [$$1] $$ARGV \t$$2\n" if /\*{3}(.{8})\*{3}(.*)/' \
-	       $(asm_tests_out); echo;
+$(ic): $(icc_timestamp) $(outputs_icc)
+	cd $(cur_build_icc_dir); \
+	date > $(notdir $(ic))
 
-run: run-asm-tests 
-	run-debug: run-asm-tests-debug 
+init_design_icc: $(init_design_icc)
 
-.PHONY: run-asm-tests 
-	.PHONY: run-asm-tests-debug 
-.PHONY: run run-debug
-
-junk += $(output_dir)
+place_opt_icc: $(place_opt_icc)
+clock_opt_cts_icc: $(clock_opt_cts_icc)
+clock_opt_psyn_icc: $(clock_opt_psyn_icc)
+clock_opt_route_icc: $(clock_opt_route_icc)
+route_icc: $(route_icc)
+route_opt_icc: $(route_opt_icc)
+chip_finish_icc: $(chip_finish_icc)
+outputs_icc: $(outputs_icc)
+ic: $(ic)
 
 #--------------------------------------------------------------------
 # Default make target
 #--------------------------------------------------------------------
 
-.PHONY: run
+.PHONY: init_design_icc place_opt_icc clock_opt_cts_icc clock_opt_psyn_icc clock_opt_route_icc route_icc route_opt_icc chip_finish_icc outputs_icc ic
 
-all : $(simv)
+all: init_design_icc ic
 
 #--------------------------------------------------------------------
 # Clean up
 #--------------------------------------------------------------------
 
-junk += simv* *.vpd *.key DVE* .vcs* timestamp
+junk +=
 
-clean :
-	rm -rf $(junk) *~ \#* *.log *.cmd *.daidir
+clean:
+	rm -rf build* current* $(junk) *~ \#*

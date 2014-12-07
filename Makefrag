@@ -1,0 +1,53 @@
+#=======================================================================
+# UCB VLSI FLOW: Process Technology Makefile fragment
+#-----------------------------------------------------------------------
+# Yunsup Lee (yunsup@cs.berkeley.edu)
+#
+# This makefile fragment will select which standard cell library you
+# will be using.
+#
+
+SHELL := /bin/bash
+UCB_STDCELLS = synopsys-32nm/multi_vt
+vlsidir = vlsi
+
+
+
+vcs_clock_period = 1.6
+dc_clock_period = 1.2
+icc_clock_period = 1.52
+
+clock_uncertainty = 0$(shell echo "scale=4; ${dc_clock_period}*0.05" | bc)
+input_delay = 0$(shell echo "scale=4; ${dc_clock_period}*0.2" | bc)
+output_delay = 0$(shell echo "scale=4; ${dc_clock_period}*0.2" | bc)
+
+icc_clock_uncertainty = 0$(shell echo "scale=4; ${icc_clock_period}*0.05" | bc)
+icc_input_delay = 0$(shell echo "scale=4; ${icc_clock_period}*0.2" | bc)
+icc_output_delay = 0$(shell echo "scale=4; ${icc_clock_period}*0.2" | bc)
+
+ss_corner_stdcells = ss0p95v125c
+tt_corner_stdcells = tt1p05v25c
+ff_corner_stdcells = ff1p16vn40c
+
+filler_cells = SHFILL128_RVT SHFILL64_RVT SHFILL3_RVT SHFILL2_RVT SHFILL1_RVT
+
+# only use regular VT standard cells for synthesis/p&r
+mw_ref_libs = \
+  cells_rvt.mw \
+  io_wb.mw \
+  io_pll.mw \
+  SRAM1RW256x128_new.mw \
+  SRAM1RW64x32_new.mw \
+
+
+#saed32sram_tt1p05v25c.mw
+
+target_library_files = \
+  saed32rvt_$(tt_corner_stdcells).db \
+  saed32io_wb_tt1p05v25c_2p5v.db \
+  saed32pll_tt1p05v25c_2p5v.db \
+  SRAM1RW256x128_new.db \
+  SRAM1RW64x32_new.db \
+  saed32sram_tt1p05v25c.db \
+
+

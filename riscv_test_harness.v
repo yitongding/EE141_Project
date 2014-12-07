@@ -20,10 +20,15 @@ module rocketTestHarness;
   wire [`MEM_ADDR_BITS-1:0] mem_req_addr;
   wire [`MEM_DATA_BITS-1:0] mem_req_data_bits;
   wire mem_req_ready, mem_req_data_ready, mem_resp_valid;
+  wire #`INPUT_DELAY mem_req_ready_delay = mem_req_ready;
+  wire #`INPUT_DELAY mem_resp_valid_delay = mem_resp_valid;
   wire [`MEM_TAG_BITS-1:0]  mem_resp_tag;
+  wire [`MEM_TAG_BITS-1:0] #`INPUT_DELAY mem_resp_tag_delay = mem_resp_tag;
   wire [`MEM_DATA_BITS-1:0] mem_resp_data;
+  wire [`MEM_DATA_BITS-1:0] #`INPUT_DELAY mem_resp_data_delay = mem_resp_data;
   wire [(`MEM_DATA_BITS/8)-1:0] mem_req_data_mask;
   wire [1:0] mem_req_data_offset;
+  wire [31:0] exit;
 
   //-----------------------------------------------
   // Instantiate the processor
@@ -31,10 +36,10 @@ module rocketTestHarness;
   riscv_top dut
     (
       .clk(clk),
-      .reset(reset),
+      .reset(r_reset),
 
       .mem_req_valid(mem_req_valid),
-      .mem_req_ready(mem_req_ready),
+      .mem_req_ready(mem_req_ready_delay),
       .mem_req_rw(mem_req_rw),
       .mem_req_addr(mem_req_addr),
       .mem_req_tag(mem_req_tag),
@@ -45,9 +50,10 @@ module rocketTestHarness;
       .mem_req_data_mask(mem_req_data_mask),
       .mem_req_data_offset(mem_req_data_offset),
 
-      .mem_resp_valid(mem_resp_valid),
-      .mem_resp_tag(mem_resp_tag),
-      .mem_resp_data(mem_resp_data)
+      .mem_resp_valid(mem_resp_valid_delay),
+      .mem_resp_tag(mem_resp_tag_delay),
+      .mem_resp_data(mem_resp_data_delay),
+      .csr(exit)
     );
 
   
@@ -63,7 +69,7 @@ module rocketTestHarness;
   BackupMemory mem
   (
     .clk(clk),
-    .reset(reset),
+    .reset(r_reset),
 
     .mem_req_valid(mem_req_valid),
     .mem_req_ready(mem_req_ready),
@@ -82,8 +88,6 @@ module rocketTestHarness;
     .mem_resp_tag(mem_resp_tag)
   );
 
-  wire [31:0] exit;
-  assign exit = dut.cpu.dpath.csr_tohost;
 
   // TODO: tohost/fromhost -> exit code (no longer through HTIF)
 
@@ -177,11 +181,20 @@ module rocketTestHarness;
   reg [255:0] reason = 0;
   always @(posedge clk)
   begin
-
+    //$fwrite(32'h80000002, "C%0d: csr: %d\n", trace_count, exit);
     //$fwrite(32'h80000002, "C%d: %d [%d] pc=[%h] W[r%d=%h][%d] R[r%d=%h] R[r%d=%h] inst=[%h] DASM(%h)\n", T135, T133, T132, T130, T128, T127, T126, T124, T97, T95, T9, T8, T1);
+
     if (reset == 0) begin
-      $fwrite(32'h80000002, "C%0d: PC=%h icache_re=%d  dcache_re=%h icache_dou=%h stall=%h dcache_we=%h\n",trace_count,dut.cpu.dpath.PC,dut.cpu.dpath.icache_re,dut.cpu.dpath.dcache_re,dut.cpu.dpath.icache_dout,dut.cpu.dpath.stall,dut.cpu.dpath.dcache_we);
-    end
+      #0.1;
+      //$fwrite(32'h80000002, "C%0d: PC=%h W[r%d=%h] WE=%d DASM(%h)\n",trace_count,dut.cpu.dpath.pc_m,dut.cpu.dpath.wb_reg_m,dut.cpu.dpath.wb_value,dut.cpu.dpath.wb_reg_we,dut.cpu.dpath.inst_m);
+      `ifndef GATELEVEL
+
+     $fwrite(32'h80000002, "C%0d: PC=%h icache_dou=%h stall=%h ALUop=%d SrcA=%h SrcB=%h ALUOutE=%h ra=%h s1=%h t2=%h t3=%h\n",trace_count,dut.cpu.dpath.PC,dut.cpu.dpath.icache_dout,dut.cpu.dpath.stall,dut.cpu.dpath.ALUop, dut.cpu.dpath.SrcA, dut.cpu.dpath.SrcB,dut.cpu.dpath.ALUOutE,dut.cpu.dpath.RegFile[1],dut.cpu.dpath.RegFile[3],dut.cpu.dpath.RegFile[28],dut.cpu.dpath.RegFile[29] );
+
+      `endif
+      
+      //$fwrite(32'h80000002, "C%0d: INST=%h PC_x=%h A=%h B=%h ALUout=%h\n",trace_count,dut.cpu.dpath.inst_x , dut.cpu.dpath.pc_x,dut.cpu.dpath.alu_a_input_x, dut.cpu.dpath.alu_b_input_x, dut.cpu.dpath.alu_out_x);
+    end 
 
     if (max_cycles > 0 && trace_count > max_cycles) begin
       reason = "timeout";

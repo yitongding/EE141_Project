@@ -1,0 +1,1233 @@
+ 
+****************************************
+Report : timing
+        -path full
+        -delay max
+        -nworst 10
+        -input_pins
+        -nets
+        -max_paths 10
+        -transition_time
+        -capacitance
+Design : riscv_top
+Version: G-2012.06-SP3
+Date   : Sat Nov 29 15:31:52 2014
+****************************************
+
+ * Some/all delay information is back-annotated.
+
+ # A fanout number of 1000 was used for high fanout net computations.
+
+Operating Conditions: tt1p05v25c   Library: saed32rvt_tt1p05v25c
+Wire Load Model Mode: Inactive.
+
+  Startpoint: cpu/dpath/InstrE_reg_20_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: mem/icache/data
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                       Fanout       Cap     Trans      Incr       Path
+  ----------------------------------------------------------------------------------------------
+  clock clk (rise edge)                                                     0.0000     0.0000
+  clock network delay (ideal)                                               0.0000     0.0000
+  cpu/dpath/InstrE_reg_20_/CLK (DFFX2_RVT)                        0.0000    0.0000 #   0.0000 r
+  cpu/dpath/InstrE_reg_20_/Q (DFFX2_RVT)                          0.0458    0.1163     0.1163 f
+  cpu/dpath/datapath_contents[20] (net)         7      12.1331              0.0000     0.1163 f
+  cpu/dpath/U1130/A1 (AND2X1_RVT)                                 0.0458    0.0005 *   0.1168 f
+  cpu/dpath/U1130/Y (AND2X1_RVT)                                  0.0265    0.0475     0.1643 f
+  cpu/dpath/n4807 (net)                         4       2.7612              0.0000     0.1643 f
+  cpu/dpath/U1129/A1 (AND2X4_RVT)                                 0.0265    0.0000 *   0.1643 f
+  cpu/dpath/U1129/Y (AND2X4_RVT)                                  0.0369    0.0613     0.2256 f
+  cpu/dpath/n3665 (net)                         6      13.7376              0.0000     0.2256 f
+  cpu/dpath/U7010/A (NBUFFX8_RVT)                                 0.0369    0.0004 *   0.2261 f
+  cpu/dpath/U7010/Y (NBUFFX8_RVT)                                 0.0233    0.0403     0.2664 f
+  cpu/dpath/n8071 (net)                        17      18.1996              0.0000     0.2664 f
+  cpu/dpath/U7011/A (INVX1_RVT)                                   0.0233    0.0002 *   0.2666 f
+  cpu/dpath/U7011/Y (INVX1_RVT)                                   0.0191    0.0187     0.2853 r
+  cpu/dpath/n8072 (net)                         1       1.7668              0.0000     0.2853 r
+  cpu/dpath/U7518/A2 (OR2X1_RVT)                                  0.0191    0.0000 *   0.2854 r
+  cpu/dpath/U7518/Y (OR2X1_RVT)                                   0.0143    0.0282     0.3136 r
+  cpu/dpath/n8858 (net)                         1       0.4936              0.0000     0.3136 r
+  cpu/dpath/U7515/A2 (AND3X1_RVT)                                 0.0143    0.0000 *   0.3136 r
+  cpu/dpath/U7515/Y (AND3X1_RVT)                                  0.0194    0.0387     0.3523 r
+  cpu/dpath/n809 (net)                          1       1.0080              0.0000     0.3523 r
+  cpu/dpath/U8659/A2 (NAND4X0_RVT)                                0.0194    0.0000 *   0.3523 r
+  cpu/dpath/U8659/Y (NAND4X0_RVT)                                 0.0423    0.0353     0.3876 f
+  cpu/dpath/n102 (net)                          1       0.8126              0.0000     0.3876 f
+  cpu/dpath/U9/A4 (OA22X2_RVT)                                    0.0423    0.0000 *   0.3876 f
+  cpu/dpath/U9/Y (OA22X2_RVT)                                     0.0426    0.0667     0.4544 f
+  cpu/dpath/n6082 (net)                         2       9.1087              0.0000     0.4544 f
+  cpu/dpath/U172/A1 (AO21X2_RVT)                                  0.0426    0.0008 *   0.4551 f
+  cpu/dpath/U172/Y (AO21X2_RVT)                                   0.0368    0.0720     0.5271 f
+  cpu/dpath/SrcB[17] (net)                      6       7.9600              0.0000     0.5271 f
+  cpu/dpath/Dut5/B[17] (BranchPro)                                          0.0000     0.5271 f
+  cpu/dpath/Dut5/B[17] (net)                            7.9600              0.0000     0.5271 f
+  cpu/dpath/Dut5/U161/A2 (OR2X1_RVT)                              0.0368    0.0001 *   0.5272 f
+  cpu/dpath/Dut5/U161/Y (OR2X1_RVT)                               0.0156    0.0310     0.5582 f
+  cpu/dpath/Dut5/n370 (net)                     1       0.6337              0.0000     0.5582 f
+  cpu/dpath/Dut5/U107/A4 (AO22X1_RVT)                             0.0156    0.0000 *   0.5582 f
+  cpu/dpath/Dut5/U107/Y (AO22X1_RVT)                              0.0165    0.0309     0.5892 f
+  cpu/dpath/Dut5/n349 (net)                     2       0.9629              0.0000     0.5892 f
+  cpu/dpath/Dut5/U99/A2 (AO21X1_RVT)                              0.0165    0.0000 *   0.5892 f
+  cpu/dpath/Dut5/U99/Y (AO21X1_RVT)                               0.0190    0.0428     0.6319 f
+  cpu/dpath/Dut5/n344 (net)                     1       1.4179              0.0000     0.6319 f
+  cpu/dpath/Dut5/U259/A (INVX2_RVT)                               0.0190    0.0000 *   0.6319 f
+  cpu/dpath/Dut5/U259/Y (INVX2_RVT)                               0.0146    0.0145     0.6465 r
+  cpu/dpath/Dut5/n268 (net)                     1       2.3460              0.0000     0.6465 r
+  cpu/dpath/Dut5/U257/A2 (OA21X1_RVT)                             0.0146    0.0001 *   0.6465 r
+  cpu/dpath/Dut5/U257/Y (OA21X1_RVT)                              0.0175    0.0359     0.6824 r
+  cpu/dpath/Dut5/n437 (net)                     1       0.6093              0.0000     0.6824 r
+  cpu/dpath/Dut5/U254/A2 (OA21X1_RVT)                             0.0175    0.0000 *   0.6824 r
+  cpu/dpath/Dut5/U254/Y (OA21X1_RVT)                              0.0186    0.0359     0.7183 r
+  cpu/dpath/Dut5/n445 (net)                     1       0.5396              0.0000     0.7183 r
+  cpu/dpath/Dut5/U268/A4 (AO22X1_RVT)                             0.0186    0.0000 *   0.7183 r
+  cpu/dpath/Dut5/U268/Y (AO22X1_RVT)                              0.0225    0.0397     0.7580 r
+  cpu/dpath/Dut5/n446 (net)                     1       1.2164              0.0000     0.7580 r
+  cpu/dpath/Dut5/U270/A1 (XNOR2X2_RVT)                            0.0225    0.0000 *   0.7580 r
+  cpu/dpath/Dut5/U270/Y (XNOR2X2_RVT)                             0.0210    0.0519     0.8099 r
+  cpu/dpath/Dut5/n84 (net)                      1       0.7600              0.0000     0.8099 r
+  cpu/dpath/Dut5/U218/A1 (NAND3X0_RVT)                            0.0210    0.0000 *   0.8099 r
+  cpu/dpath/Dut5/U218/Y (NAND3X0_RVT)                             0.0294    0.0230     0.8329 f
+  cpu/dpath/Dut5/n450 (net)                     1       0.4673              0.0000     0.8329 f
+  cpu/dpath/Dut5/U221/A1 (AND3X1_RVT)                             0.0294    0.0000 *   0.8329 f
+  cpu/dpath/Dut5/U221/Y (AND3X1_RVT)                              0.0279    0.0486     0.8816 f
+  cpu/dpath/Dut5/n451 (net)                     1       2.6290              0.0000     0.8816 f
+  cpu/dpath/Dut5/U274/A (INVX4_RVT)                               0.0279    0.0000 *   0.8816 f
+  cpu/dpath/Dut5/U274/Y (INVX4_RVT)                               0.0209    0.0196     0.9012 r
+  cpu/dpath/Dut5/Branchout (net)                3       7.7159              0.0000     0.9012 r
+  cpu/dpath/Dut5/Branchout (BranchPro)                                      0.0000     0.9012 r
+  cpu/dpath/Branchout (net)                             7.7159              0.0000     0.9012 r
+  cpu/dpath/U8711/A1 (AND2X2_RVT)                                 0.0209    0.0005 *   0.9016 r
+  cpu/dpath/U8711/Y (AND2X2_RVT)                                  0.0279    0.0445     0.9461 r
+  cpu/dpath/n9703 (net)                         1       5.1018              0.0000     0.9461 r
+  cpu/dpath/U8712/A (INVX8_RVT)                                   0.0279    0.0000 *   0.9461 r
+  cpu/dpath/U8712/Y (INVX8_RVT)                                   0.0195    0.0142     0.9603 f
+  cpu/dpath/n3856 (net)                        10      11.4764              0.0000     0.9603 f
+  cpu/dpath/U2957/A1 (NAND3X0_RVT)                                0.0195    0.0002 *   0.9605 f
+  cpu/dpath/U2957/Y (NAND3X0_RVT)                                 0.0230    0.0195     0.9799 r
+  cpu/dpath/n3805 (net)                         1       0.5980              0.0000     0.9799 r
+  cpu/dpath/U82/A1 (NAND4X0_RVT)                                  0.0230    0.0000 *   0.9799 r
+  cpu/dpath/U82/Y (NAND4X0_RVT)                                   0.0926    0.0638     1.0438 f
+  cpu/dpath/icache_addr[8] (net)                2       3.4496              0.0000     1.0438 f
+  cpu/dpath/icache_addr[8] (datapath)                                       0.0000     1.0438 f
+  cpu/n10 (net)                                         3.4496              0.0000     1.0438 f
+  cpu/U1/A (NBUFFX8_RVT)                                          0.0926    0.0001 *   1.0439 f
+  cpu/U1/Y (NBUFFX8_RVT)                                          0.0289    0.0482     1.0920 f
+  cpu/icache_addr[8] (net)                      3      11.7227              0.0000     1.0920 f
+  cpu/icache_addr[8] (Riscv141)                                             0.0000     1.0920 f
+  icache_addr[8] (net)                                 11.7227              0.0000     1.0920 f
+  mem/icache_addr[8] (Memory141)                                            0.0000     1.0920 f
+  mem/icache_addr[8] (net)                             11.7227              0.0000     1.0920 f
+  mem/icache/cpu_req_addr[6] (cache_0)                                      0.0000     1.0920 f
+  mem/icache/cpu_req_addr[6] (net)                     11.7227              0.0000     1.0920 f
+  mem/icache/U291/A2 (MUX21X2_RVT)                                0.0289    0.0010 *   1.0930 f
+  mem/icache/U291/Y (MUX21X2_RVT)                                 0.0552    0.0777     1.1707 f
+  mem/icache/data_idx[6] (net)                  1      12.9962              0.0000     1.1707 f
+  mem/icache/data/A1[4] (SRAM1RW256x128_new)                      0.0736    0.0016 *   1.1723 f
+  data arrival time                                                                    1.1723
+
+  clock clk (rise edge)                                                     1.2000     1.2000
+  clock network delay (ideal)                                               0.0000     1.2000
+  clock uncertainty                                                        -0.0600     1.1400
+  mem/icache/data/CE1 (SRAM1RW256x128_new)                                  0.0000     1.1400 r
+  library setup time                                                       -0.0100     1.1300
+  data required time                                                                   1.1300
+  ----------------------------------------------------------------------------------------------
+  data required time                                                                   1.1300
+  data arrival time                                                                   -1.1723
+  ----------------------------------------------------------------------------------------------
+  slack (VIOLATED)                                                                    -0.0423
+
+
+  Startpoint: cpu/dpath/InstrE_reg_20_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: mem/icache/data
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                       Fanout       Cap     Trans      Incr       Path
+  ----------------------------------------------------------------------------------------------
+  clock clk (rise edge)                                                     0.0000     0.0000
+  clock network delay (ideal)                                               0.0000     0.0000
+  cpu/dpath/InstrE_reg_20_/CLK (DFFX2_RVT)                        0.0000    0.0000 #   0.0000 r
+  cpu/dpath/InstrE_reg_20_/Q (DFFX2_RVT)                          0.0458    0.1163     0.1163 f
+  cpu/dpath/datapath_contents[20] (net)         7      12.1331              0.0000     0.1163 f
+  cpu/dpath/U1130/A1 (AND2X1_RVT)                                 0.0458    0.0005 *   0.1168 f
+  cpu/dpath/U1130/Y (AND2X1_RVT)                                  0.0265    0.0475     0.1643 f
+  cpu/dpath/n4807 (net)                         4       2.7612              0.0000     0.1643 f
+  cpu/dpath/U1129/A1 (AND2X4_RVT)                                 0.0265    0.0000 *   0.1643 f
+  cpu/dpath/U1129/Y (AND2X4_RVT)                                  0.0369    0.0613     0.2256 f
+  cpu/dpath/n3665 (net)                         6      13.7376              0.0000     0.2256 f
+  cpu/dpath/U8533/A (NBUFFX16_RVT)                                0.0369    0.0000 *   0.2256 f
+  cpu/dpath/U8533/Y (NBUFFX16_RVT)                                0.0200    0.0384     0.2640 f
+  cpu/dpath/n9540 (net)                        20      20.9345              0.0000     0.2640 f
+  cpu/dpath/U7013/A (INVX1_RVT)                                   0.0200    0.0006 *   0.2646 f
+  cpu/dpath/U7013/Y (INVX1_RVT)                                   0.0149    0.0149     0.2795 r
+  cpu/dpath/n8074 (net)                         1       1.0667              0.0000     0.2795 r
+  cpu/dpath/U8598/A2 (OR2X1_RVT)                                  0.0149    0.0000 *   0.2795 r
+  cpu/dpath/U8598/Y (OR2X1_RVT)                                   0.0144    0.0275     0.3070 r
+  cpu/dpath/n9528 (net)                         1       0.5535              0.0000     0.3070 r
+  cpu/dpath/U8570/A4 (NAND4X0_RVT)                                0.0144    0.0000 *   0.3070 r
+  cpu/dpath/U8570/Y (NAND4X0_RVT)                                 0.0393    0.0361     0.3431 f
+  cpu/dpath/n9613 (net)                         1       0.6185              0.0000     0.3431 f
+  cpu/dpath/U8188/A3 (OR3X1_RVT)                                  0.0393    0.0000 *   0.3431 f
+  cpu/dpath/U8188/Y (OR3X1_RVT)                                   0.0176    0.0356     0.3787 f
+  cpu/dpath/n702 (net)                          1       0.5710              0.0000     0.3787 f
+  cpu/dpath/U8211/A2 (AO21X2_RVT)                                 0.0176    0.0000 *   0.3787 f
+  cpu/dpath/U8211/Y (AO21X2_RVT)                                  0.0449    0.0698     0.4485 f
+  cpu/dpath/n6095 (net)                         2      11.0188              0.0000     0.4485 f
+  cpu/dpath/U8526/A (INVX2_RVT)                                   0.0449    0.0012 *   0.4497 f
+  cpu/dpath/U8526/Y (INVX2_RVT)                                   0.0210    0.0140     0.4636 r
+  cpu/dpath/n9460 (net)                         1       0.5532              0.0000     0.4636 r
+  cpu/dpath/U8443/A2 (OA21X1_RVT)                                 0.0210    0.0000 *   0.4636 r
+  cpu/dpath/U8443/Y (OA21X1_RVT)                                  0.0270    0.0461     0.5097 r
+  cpu/dpath/n9665 (net)                         1       2.6410              0.0000     0.5097 r
+  cpu/dpath/U8482/A (INVX4_RVT)                                   0.0270    0.0000 *   0.5097 r
+  cpu/dpath/U8482/Y (INVX4_RVT)                                   0.0290    0.0238     0.5335 f
+  cpu/dpath/SrcB[1] (net)                       5      13.7615              0.0000     0.5335 f
+  cpu/dpath/Dut5/B[1] (BranchPro)                                           0.0000     0.5335 f
+  cpu/dpath/Dut5/B[1] (net)                            13.7615              0.0000     0.5335 f
+  cpu/dpath/Dut5/U6/A (INVX2_RVT)                                 0.0290    0.0005 *   0.5340 f
+  cpu/dpath/Dut5/U6/Y (INVX2_RVT)                                 0.0149    0.0114     0.5455 r
+  cpu/dpath/Dut5/n392 (net)                     1       0.4229              0.0000     0.5455 r
+  cpu/dpath/Dut5/U190/A2 (NAND2X0_RVT)                            0.0149    0.0000 *   0.5455 r
+  cpu/dpath/Dut5/U190/Y (NAND2X0_RVT)                             0.0244    0.0183     0.5638 f
+  cpu/dpath/Dut5/n391 (net)                     1       0.5139              0.0000     0.5638 f
+  cpu/dpath/Dut5/U118/A1 (NAND3X0_RVT)                            0.0244    0.0000 *   0.5638 f
+  cpu/dpath/Dut5/U118/Y (NAND3X0_RVT)                             0.0214    0.0213     0.5851 r
+  cpu/dpath/Dut5/n402 (net)                     1       0.6118              0.0000     0.5851 r
+  cpu/dpath/Dut5/U86/A2 (AO21X1_RVT)                              0.0214    0.0000 *   0.5851 r
+  cpu/dpath/Dut5/U86/Y (AO21X1_RVT)                               0.0240    0.0487     0.6337 r
+  cpu/dpath/Dut5/n256 (net)                     2       1.6996              0.0000     0.6337 r
+  cpu/dpath/Dut5/U266/A1 (AO21X1_RVT)                             0.0240    0.0000 *   0.6338 r
+  cpu/dpath/Dut5/U266/Y (AO21X1_RVT)                              0.0184    0.0422     0.6760 r
+  cpu/dpath/Dut5/n444 (net)                     1       0.5092              0.0000     0.6760 r
+  cpu/dpath/Dut5/U265/A1 (AO21X1_RVT)                             0.0184    0.0000 *   0.6760 r
+  cpu/dpath/Dut5/U265/Y (AO21X1_RVT)                              0.0206    0.0436     0.7196 r
+  cpu/dpath/Dut5/n87 (net)                      1       0.9935              0.0000     0.7196 r
+  cpu/dpath/Dut5/U268/A3 (AO22X1_RVT)                             0.0206    0.0000 *   0.7196 r
+  cpu/dpath/Dut5/U268/Y (AO22X1_RVT)                              0.0225    0.0384     0.7579 r
+  cpu/dpath/Dut5/n446 (net)                     1       1.2164              0.0000     0.7579 r
+  cpu/dpath/Dut5/U270/A1 (XNOR2X2_RVT)                            0.0225    0.0000 *   0.7579 r
+  cpu/dpath/Dut5/U270/Y (XNOR2X2_RVT)                             0.0210    0.0519     0.8098 r
+  cpu/dpath/Dut5/n84 (net)                      1       0.7600              0.0000     0.8098 r
+  cpu/dpath/Dut5/U218/A1 (NAND3X0_RVT)                            0.0210    0.0000 *   0.8098 r
+  cpu/dpath/Dut5/U218/Y (NAND3X0_RVT)                             0.0294    0.0230     0.8329 f
+  cpu/dpath/Dut5/n450 (net)                     1       0.4673              0.0000     0.8329 f
+  cpu/dpath/Dut5/U221/A1 (AND3X1_RVT)                             0.0294    0.0000 *   0.8329 f
+  cpu/dpath/Dut5/U221/Y (AND3X1_RVT)                              0.0279    0.0486     0.8815 f
+  cpu/dpath/Dut5/n451 (net)                     1       2.6290              0.0000     0.8815 f
+  cpu/dpath/Dut5/U274/A (INVX4_RVT)                               0.0279    0.0000 *   0.8815 f
+  cpu/dpath/Dut5/U274/Y (INVX4_RVT)                               0.0209    0.0196     0.9011 r
+  cpu/dpath/Dut5/Branchout (net)                3       7.7159              0.0000     0.9011 r
+  cpu/dpath/Dut5/Branchout (BranchPro)                                      0.0000     0.9011 r
+  cpu/dpath/Branchout (net)                             7.7159              0.0000     0.9011 r
+  cpu/dpath/U8711/A1 (AND2X2_RVT)                                 0.0209    0.0005 *   0.9016 r
+  cpu/dpath/U8711/Y (AND2X2_RVT)                                  0.0279    0.0445     0.9460 r
+  cpu/dpath/n9703 (net)                         1       5.1018              0.0000     0.9460 r
+  cpu/dpath/U8712/A (INVX8_RVT)                                   0.0279    0.0000 *   0.9460 r
+  cpu/dpath/U8712/Y (INVX8_RVT)                                   0.0195    0.0142     0.9603 f
+  cpu/dpath/n3856 (net)                        10      11.4764              0.0000     0.9603 f
+  cpu/dpath/U2957/A1 (NAND3X0_RVT)                                0.0195    0.0002 *   0.9604 f
+  cpu/dpath/U2957/Y (NAND3X0_RVT)                                 0.0230    0.0195     0.9799 r
+  cpu/dpath/n3805 (net)                         1       0.5980              0.0000     0.9799 r
+  cpu/dpath/U82/A1 (NAND4X0_RVT)                                  0.0230    0.0000 *   0.9799 r
+  cpu/dpath/U82/Y (NAND4X0_RVT)                                   0.0926    0.0638     1.0437 f
+  cpu/dpath/icache_addr[8] (net)                2       3.4496              0.0000     1.0437 f
+  cpu/dpath/icache_addr[8] (datapath)                                       0.0000     1.0437 f
+  cpu/n10 (net)                                         3.4496              0.0000     1.0437 f
+  cpu/U1/A (NBUFFX8_RVT)                                          0.0926    0.0001 *   1.0438 f
+  cpu/U1/Y (NBUFFX8_RVT)                                          0.0289    0.0482     1.0920 f
+  cpu/icache_addr[8] (net)                      3      11.7227              0.0000     1.0920 f
+  cpu/icache_addr[8] (Riscv141)                                             0.0000     1.0920 f
+  icache_addr[8] (net)                                 11.7227              0.0000     1.0920 f
+  mem/icache_addr[8] (Memory141)                                            0.0000     1.0920 f
+  mem/icache_addr[8] (net)                             11.7227              0.0000     1.0920 f
+  mem/icache/cpu_req_addr[6] (cache_0)                                      0.0000     1.0920 f
+  mem/icache/cpu_req_addr[6] (net)                     11.7227              0.0000     1.0920 f
+  mem/icache/U291/A2 (MUX21X2_RVT)                                0.0289    0.0010 *   1.0930 f
+  mem/icache/U291/Y (MUX21X2_RVT)                                 0.0552    0.0777     1.1707 f
+  mem/icache/data_idx[6] (net)                  1      12.9962              0.0000     1.1707 f
+  mem/icache/data/A1[4] (SRAM1RW256x128_new)                      0.0736    0.0016 *   1.1723 f
+  data arrival time                                                                    1.1723
+
+  clock clk (rise edge)                                                     1.2000     1.2000
+  clock network delay (ideal)                                               0.0000     1.2000
+  clock uncertainty                                                        -0.0600     1.1400
+  mem/icache/data/CE1 (SRAM1RW256x128_new)                                  0.0000     1.1400 r
+  library setup time                                                       -0.0100     1.1300
+  data required time                                                                   1.1300
+  ----------------------------------------------------------------------------------------------
+  data required time                                                                   1.1300
+  data arrival time                                                                   -1.1723
+  ----------------------------------------------------------------------------------------------
+  slack (VIOLATED)                                                                    -0.0423
+
+
+  Startpoint: cpu/dpath/InstrE_reg_20_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: mem/icache/data
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                       Fanout       Cap     Trans      Incr       Path
+  ----------------------------------------------------------------------------------------------
+  clock clk (rise edge)                                                     0.0000     0.0000
+  clock network delay (ideal)                                               0.0000     0.0000
+  cpu/dpath/InstrE_reg_20_/CLK (DFFX2_RVT)                        0.0000    0.0000 #   0.0000 r
+  cpu/dpath/InstrE_reg_20_/Q (DFFX2_RVT)                          0.0458    0.1163     0.1163 f
+  cpu/dpath/datapath_contents[20] (net)         7      12.1331              0.0000     0.1163 f
+  cpu/dpath/U8740/A1 (OR2X2_RVT)                                  0.0458    0.0006 *   0.1168 f
+  cpu/dpath/U8740/Y (OR2X2_RVT)                                   0.0200    0.0484     0.1652 f
+  cpu/dpath/n988 (net)                          1       2.8904              0.0000     0.1652 f
+  cpu/dpath/U30/A (INVX4_RVT)                                     0.0200    0.0000 *   0.1652 f
+  cpu/dpath/U30/Y (INVX4_RVT)                                     0.0131    0.0121     0.1773 r
+  cpu/dpath/n4805 (net)                         4       3.0100              0.0000     0.1773 r
+  cpu/dpath/U2488/A1 (AND2X2_RVT)                                 0.0131    0.0000 *   0.1773 r
+  cpu/dpath/U2488/Y (AND2X2_RVT)                                  0.0290    0.0439     0.2212 r
+  cpu/dpath/n3292 (net)                         3       5.6887              0.0000     0.2212 r
+  cpu/dpath/U8759/A (NBUFFX16_RVT)                                0.0290    0.0000 *   0.2212 r
+  cpu/dpath/U8759/Y (NBUFFX16_RVT)                                0.0206    0.0372     0.2584 r
+  cpu/dpath/n9712 (net)                        13      24.2847              0.0000     0.2584 r
+  cpu/dpath/U3252/A (INVX16_RVT)                                  0.0206    0.0000 *   0.2584 r
+  cpu/dpath/U3252/Y (INVX16_RVT)                                  0.0110    0.0068     0.2653 f
+  cpu/dpath/n9438 (net)                         2       4.5124              0.0000     0.2653 f
+  cpu/dpath/U7817/A2 (OA22X1_RVT)                                 0.0110    0.0001 *   0.2654 f
+  cpu/dpath/U7817/Y (OA22X1_RVT)                                  0.0181    0.0367     0.3020 f
+  cpu/dpath/n8884 (net)                         1       0.5342              0.0000     0.3020 f
+  cpu/dpath/U7815/A2 (NAND4X0_RVT)                                0.0181    0.0000 *   0.3020 f
+  cpu/dpath/U7815/Y (NAND4X0_RVT)                                 0.0309    0.0234     0.3255 r
+  cpu/dpath/n9161 (net)                         1       0.6185              0.0000     0.3255 r
+  cpu/dpath/U8194/A3 (OR3X1_RVT)                                  0.0309    0.0000 *   0.3255 r
+  cpu/dpath/U8194/Y (OR3X1_RVT)                                   0.0183    0.0378     0.3632 r
+  cpu/dpath/n2817 (net)                         1       0.5337              0.0000     0.3632 r
+  cpu/dpath/U2014/A1 (AO22X2_RVT)                                 0.0183    0.0000 *   0.3632 r
+  cpu/dpath/U2014/Y (AO22X2_RVT)                                  0.0471    0.0756     0.4388 r
+  cpu/dpath/n6087 (net)                         2       9.9158              0.0000     0.4388 r
+  cpu/dpath/U1976/A1 (AO21X2_RVT)                                 0.0471    0.0009 *   0.4397 r
+  cpu/dpath/U1976/Y (AO21X2_RVT)                                  0.0405    0.0733     0.5130 r
+  cpu/dpath/SrcB[9] (net)                       5       6.7084              0.0000     0.5130 r
+  cpu/dpath/Dut5/B[9] (BranchPro)                                           0.0000     0.5130 r
+  cpu/dpath/Dut5/B[9] (net)                             6.7084              0.0000     0.5130 r
+  cpu/dpath/Dut5/U205/A1 (XNOR2X2_RVT)                            0.0405    0.0002 *   0.5131 r
+  cpu/dpath/Dut5/U205/Y (XNOR2X2_RVT)                             0.0280    0.0633     0.5764 r
+  cpu/dpath/Dut5/n160 (net)                     1       3.3874              0.0000     0.5764 r
+  cpu/dpath/Dut5/U80/A2 (AND2X1_RVT)                              0.0280    0.0001 *   0.5765 r
+  cpu/dpath/Dut5/U80/Y (AND2X1_RVT)                               0.0136    0.0297     0.6062 r
+  cpu/dpath/Dut5/n337 (net)                     1       0.4605              0.0000     0.6062 r
+  cpu/dpath/Dut5/U79/A1 (AND4X1_RVT)                              0.0136    0.0000 *   0.6062 r
+  cpu/dpath/Dut5/U79/Y (AND4X1_RVT)                               0.0223    0.0405     0.6467 r
+  cpu/dpath/Dut5/n406 (net)                     1       0.5718              0.0000     0.6467 r
+  cpu/dpath/Dut5/U129/A1 (NAND4X0_RVT)                            0.0223    0.0000 *   0.6467 r
+  cpu/dpath/Dut5/U129/Y (NAND4X0_RVT)                             0.0396    0.0283     0.6750 f
+  cpu/dpath/Dut5/n441 (net)                     1       0.6153              0.0000     0.6750 f
+  cpu/dpath/Dut5/U68/A1 (OR2X2_RVT)                               0.0396    0.0000 *   0.6750 f
+  cpu/dpath/Dut5/U68/Y (OR2X2_RVT)                                0.0180    0.0428     0.7178 f
+  cpu/dpath/Dut5/n88 (net)                      1       1.4559              0.0000     0.7178 f
+  cpu/dpath/Dut5/U268/A1 (AO22X1_RVT)                             0.0180    0.0000 *   0.7178 f
+  cpu/dpath/Dut5/U268/Y (AO22X1_RVT)                              0.0177    0.0411     0.7590 f
+  cpu/dpath/Dut5/n446 (net)                     1       1.2164              0.0000     0.7590 f
+  cpu/dpath/Dut5/U270/A1 (XNOR2X2_RVT)                            0.0177    0.0000 *   0.7590 f
+  cpu/dpath/Dut5/U270/Y (XNOR2X2_RVT)                             0.0210    0.0508     0.8097 r
+  cpu/dpath/Dut5/n84 (net)                      1       0.7600              0.0000     0.8097 r
+  cpu/dpath/Dut5/U218/A1 (NAND3X0_RVT)                            0.0210    0.0000 *   0.8097 r
+  cpu/dpath/Dut5/U218/Y (NAND3X0_RVT)                             0.0294    0.0230     0.8328 f
+  cpu/dpath/Dut5/n450 (net)                     1       0.4673              0.0000     0.8328 f
+  cpu/dpath/Dut5/U221/A1 (AND3X1_RVT)                             0.0294    0.0000 *   0.8328 f
+  cpu/dpath/Dut5/U221/Y (AND3X1_RVT)                              0.0279    0.0486     0.8814 f
+  cpu/dpath/Dut5/n451 (net)                     1       2.6290              0.0000     0.8814 f
+  cpu/dpath/Dut5/U274/A (INVX4_RVT)                               0.0279    0.0000 *   0.8814 f
+  cpu/dpath/Dut5/U274/Y (INVX4_RVT)                               0.0209    0.0196     0.9010 r
+  cpu/dpath/Dut5/Branchout (net)                3       7.7159              0.0000     0.9010 r
+  cpu/dpath/Dut5/Branchout (BranchPro)                                      0.0000     0.9010 r
+  cpu/dpath/Branchout (net)                             7.7159              0.0000     0.9010 r
+  cpu/dpath/U8711/A1 (AND2X2_RVT)                                 0.0209    0.0005 *   0.9015 r
+  cpu/dpath/U8711/Y (AND2X2_RVT)                                  0.0279    0.0445     0.9459 r
+  cpu/dpath/n9703 (net)                         1       5.1018              0.0000     0.9459 r
+  cpu/dpath/U8712/A (INVX8_RVT)                                   0.0279    0.0000 *   0.9459 r
+  cpu/dpath/U8712/Y (INVX8_RVT)                                   0.0195    0.0142     0.9602 f
+  cpu/dpath/n3856 (net)                        10      11.4764              0.0000     0.9602 f
+  cpu/dpath/U2957/A1 (NAND3X0_RVT)                                0.0195    0.0002 *   0.9604 f
+  cpu/dpath/U2957/Y (NAND3X0_RVT)                                 0.0230    0.0195     0.9798 r
+  cpu/dpath/n3805 (net)                         1       0.5980              0.0000     0.9798 r
+  cpu/dpath/U82/A1 (NAND4X0_RVT)                                  0.0230    0.0000 *   0.9798 r
+  cpu/dpath/U82/Y (NAND4X0_RVT)                                   0.0926    0.0638     1.0437 f
+  cpu/dpath/icache_addr[8] (net)                2       3.4496              0.0000     1.0437 f
+  cpu/dpath/icache_addr[8] (datapath)                                       0.0000     1.0437 f
+  cpu/n10 (net)                                         3.4496              0.0000     1.0437 f
+  cpu/U1/A (NBUFFX8_RVT)                                          0.0926    0.0001 *   1.0437 f
+  cpu/U1/Y (NBUFFX8_RVT)                                          0.0289    0.0482     1.0919 f
+  cpu/icache_addr[8] (net)                      3      11.7227              0.0000     1.0919 f
+  cpu/icache_addr[8] (Riscv141)                                             0.0000     1.0919 f
+  icache_addr[8] (net)                                 11.7227              0.0000     1.0919 f
+  mem/icache_addr[8] (Memory141)                                            0.0000     1.0919 f
+  mem/icache_addr[8] (net)                             11.7227              0.0000     1.0919 f
+  mem/icache/cpu_req_addr[6] (cache_0)                                      0.0000     1.0919 f
+  mem/icache/cpu_req_addr[6] (net)                     11.7227              0.0000     1.0919 f
+  mem/icache/U291/A2 (MUX21X2_RVT)                                0.0289    0.0010 *   1.0929 f
+  mem/icache/U291/Y (MUX21X2_RVT)                                 0.0552    0.0777     1.1706 f
+  mem/icache/data_idx[6] (net)                  1      12.9962              0.0000     1.1706 f
+  mem/icache/data/A1[4] (SRAM1RW256x128_new)                      0.0736    0.0016 *   1.1722 f
+  data arrival time                                                                    1.1722
+
+  clock clk (rise edge)                                                     1.2000     1.2000
+  clock network delay (ideal)                                               0.0000     1.2000
+  clock uncertainty                                                        -0.0600     1.1400
+  mem/icache/data/CE1 (SRAM1RW256x128_new)                                  0.0000     1.1400 r
+  library setup time                                                       -0.0100     1.1300
+  data required time                                                                   1.1300
+  ----------------------------------------------------------------------------------------------
+  data required time                                                                   1.1300
+  data arrival time                                                                   -1.1722
+  ----------------------------------------------------------------------------------------------
+  slack (VIOLATED)                                                                    -0.0422
+
+
+  Startpoint: cpu/dpath/InstrE_reg_20_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: mem/icache/data
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                       Fanout       Cap     Trans      Incr       Path
+  ----------------------------------------------------------------------------------------------
+  clock clk (rise edge)                                                     0.0000     0.0000
+  clock network delay (ideal)                                               0.0000     0.0000
+  cpu/dpath/InstrE_reg_20_/CLK (DFFX2_RVT)                        0.0000    0.0000 #   0.0000 r
+  cpu/dpath/InstrE_reg_20_/Q (DFFX2_RVT)                          0.0458    0.1163     0.1163 f
+  cpu/dpath/datapath_contents[20] (net)         7      12.1331              0.0000     0.1163 f
+  cpu/dpath/U8105/A (INVX2_RVT)                                   0.0458    0.0007 *   0.1169 f
+  cpu/dpath/U8105/Y (INVX2_RVT)                                   0.0246    0.0190     0.1359 r
+  cpu/dpath/n3473 (net)                         4       1.9495              0.0000     0.1359 r
+  cpu/dpath/U8652/A2 (AND2X1_RVT)                                 0.0246    0.0000 *   0.1359 r
+  cpu/dpath/U8652/Y (AND2X1_RVT)                                  0.0145    0.0303     0.1662 r
+  cpu/dpath/n767 (net)                          1       0.7065              0.0000     0.1662 r
+  cpu/dpath/U790/A1 (AND2X4_RVT)                                  0.0145    0.0000 *   0.1662 r
+  cpu/dpath/U790/Y (AND2X4_RVT)                                   0.0349    0.0542     0.2204 r
+  cpu/dpath/n4353 (net)                         5      11.4043              0.0000     0.2204 r
+  cpu/dpath/U8125/A (INVX4_RVT)                                   0.0349    0.0001 *   0.2205 r
+  cpu/dpath/U8125/Y (INVX4_RVT)                                   0.0181    0.0099     0.2304 f
+  cpu/dpath/n9104 (net)                         1       2.6008              0.0000     0.2304 f
+  cpu/dpath/U3569/A (INVX4_RVT)                                   0.0181    0.0000 *   0.2304 f
+  cpu/dpath/U3569/Y (INVX4_RVT)                                   0.0166    0.0165     0.2469 r
+  cpu/dpath/n8109 (net)                         5       7.5808              0.0000     0.2469 r
+  cpu/dpath/U7832/A1 (AO22X1_RVT)                                 0.0166    0.0002 *   0.2471 r
+  cpu/dpath/U7832/Y (AO22X1_RVT)                                  0.0206    0.0452     0.2923 r
+  cpu/dpath/n8891 (net)                         1       0.7923              0.0000     0.2923 r
+  cpu/dpath/U7816/A (INVX1_RVT)                                   0.0206    0.0000 *   0.2923 r
+  cpu/dpath/U7816/Y (INVX1_RVT)                                   0.0135    0.0100     0.3023 f
+  cpu/dpath/n8883 (net)                         1       0.5084              0.0000     0.3023 f
+  cpu/dpath/U7815/A3 (NAND4X0_RVT)                                0.0135    0.0000 *   0.3023 f
+  cpu/dpath/U7815/Y (NAND4X0_RVT)                                 0.0309    0.0232     0.3254 r
+  cpu/dpath/n9161 (net)                         1       0.6185              0.0000     0.3254 r
+  cpu/dpath/U8194/A3 (OR3X1_RVT)                                  0.0309    0.0000 *   0.3254 r
+  cpu/dpath/U8194/Y (OR3X1_RVT)                                   0.0183    0.0378     0.3632 r
+  cpu/dpath/n2817 (net)                         1       0.5337              0.0000     0.3632 r
+  cpu/dpath/U2014/A1 (AO22X2_RVT)                                 0.0183    0.0000 *   0.3632 r
+  cpu/dpath/U2014/Y (AO22X2_RVT)                                  0.0471    0.0756     0.4388 r
+  cpu/dpath/n6087 (net)                         2       9.9158              0.0000     0.4388 r
+  cpu/dpath/U1976/A1 (AO21X2_RVT)                                 0.0471    0.0009 *   0.4397 r
+  cpu/dpath/U1976/Y (AO21X2_RVT)                                  0.0405    0.0733     0.5130 r
+  cpu/dpath/SrcB[9] (net)                       5       6.7084              0.0000     0.5130 r
+  cpu/dpath/Dut5/B[9] (BranchPro)                                           0.0000     0.5130 r
+  cpu/dpath/Dut5/B[9] (net)                             6.7084              0.0000     0.5130 r
+  cpu/dpath/Dut5/U205/A1 (XNOR2X2_RVT)                            0.0405    0.0002 *   0.5131 r
+  cpu/dpath/Dut5/U205/Y (XNOR2X2_RVT)                             0.0280    0.0633     0.5764 r
+  cpu/dpath/Dut5/n160 (net)                     1       3.3874              0.0000     0.5764 r
+  cpu/dpath/Dut5/U80/A2 (AND2X1_RVT)                              0.0280    0.0001 *   0.5765 r
+  cpu/dpath/Dut5/U80/Y (AND2X1_RVT)                               0.0136    0.0297     0.6062 r
+  cpu/dpath/Dut5/n337 (net)                     1       0.4605              0.0000     0.6062 r
+  cpu/dpath/Dut5/U79/A1 (AND4X1_RVT)                              0.0136    0.0000 *   0.6062 r
+  cpu/dpath/Dut5/U79/Y (AND4X1_RVT)                               0.0223    0.0405     0.6467 r
+  cpu/dpath/Dut5/n406 (net)                     1       0.5718              0.0000     0.6467 r
+  cpu/dpath/Dut5/U129/A1 (NAND4X0_RVT)                            0.0223    0.0000 *   0.6467 r
+  cpu/dpath/Dut5/U129/Y (NAND4X0_RVT)                             0.0396    0.0283     0.6750 f
+  cpu/dpath/Dut5/n441 (net)                     1       0.6153              0.0000     0.6750 f
+  cpu/dpath/Dut5/U68/A1 (OR2X2_RVT)                               0.0396    0.0000 *   0.6750 f
+  cpu/dpath/Dut5/U68/Y (OR2X2_RVT)                                0.0180    0.0428     0.7178 f
+  cpu/dpath/Dut5/n88 (net)                      1       1.4559              0.0000     0.7178 f
+  cpu/dpath/Dut5/U268/A1 (AO22X1_RVT)                             0.0180    0.0000 *   0.7178 f
+  cpu/dpath/Dut5/U268/Y (AO22X1_RVT)                              0.0177    0.0411     0.7590 f
+  cpu/dpath/Dut5/n446 (net)                     1       1.2164              0.0000     0.7590 f
+  cpu/dpath/Dut5/U270/A1 (XNOR2X2_RVT)                            0.0177    0.0000 *   0.7590 f
+  cpu/dpath/Dut5/U270/Y (XNOR2X2_RVT)                             0.0210    0.0508     0.8097 r
+  cpu/dpath/Dut5/n84 (net)                      1       0.7600              0.0000     0.8097 r
+  cpu/dpath/Dut5/U218/A1 (NAND3X0_RVT)                            0.0210    0.0000 *   0.8097 r
+  cpu/dpath/Dut5/U218/Y (NAND3X0_RVT)                             0.0294    0.0230     0.8328 f
+  cpu/dpath/Dut5/n450 (net)                     1       0.4673              0.0000     0.8328 f
+  cpu/dpath/Dut5/U221/A1 (AND3X1_RVT)                             0.0294    0.0000 *   0.8328 f
+  cpu/dpath/Dut5/U221/Y (AND3X1_RVT)                              0.0279    0.0486     0.8814 f
+  cpu/dpath/Dut5/n451 (net)                     1       2.6290              0.0000     0.8814 f
+  cpu/dpath/Dut5/U274/A (INVX4_RVT)                               0.0279    0.0000 *   0.8814 f
+  cpu/dpath/Dut5/U274/Y (INVX4_RVT)                               0.0209    0.0196     0.9010 r
+  cpu/dpath/Dut5/Branchout (net)                3       7.7159              0.0000     0.9010 r
+  cpu/dpath/Dut5/Branchout (BranchPro)                                      0.0000     0.9010 r
+  cpu/dpath/Branchout (net)                             7.7159              0.0000     0.9010 r
+  cpu/dpath/U8711/A1 (AND2X2_RVT)                                 0.0209    0.0005 *   0.9015 r
+  cpu/dpath/U8711/Y (AND2X2_RVT)                                  0.0279    0.0445     0.9459 r
+  cpu/dpath/n9703 (net)                         1       5.1018              0.0000     0.9459 r
+  cpu/dpath/U8712/A (INVX8_RVT)                                   0.0279    0.0000 *   0.9459 r
+  cpu/dpath/U8712/Y (INVX8_RVT)                                   0.0195    0.0142     0.9602 f
+  cpu/dpath/n3856 (net)                        10      11.4764              0.0000     0.9602 f
+  cpu/dpath/U2957/A1 (NAND3X0_RVT)                                0.0195    0.0002 *   0.9603 f
+  cpu/dpath/U2957/Y (NAND3X0_RVT)                                 0.0230    0.0195     0.9798 r
+  cpu/dpath/n3805 (net)                         1       0.5980              0.0000     0.9798 r
+  cpu/dpath/U82/A1 (NAND4X0_RVT)                                  0.0230    0.0000 *   0.9798 r
+  cpu/dpath/U82/Y (NAND4X0_RVT)                                   0.0926    0.0638     1.0437 f
+  cpu/dpath/icache_addr[8] (net)                2       3.4496              0.0000     1.0437 f
+  cpu/dpath/icache_addr[8] (datapath)                                       0.0000     1.0437 f
+  cpu/n10 (net)                                         3.4496              0.0000     1.0437 f
+  cpu/U1/A (NBUFFX8_RVT)                                          0.0926    0.0001 *   1.0437 f
+  cpu/U1/Y (NBUFFX8_RVT)                                          0.0289    0.0482     1.0919 f
+  cpu/icache_addr[8] (net)                      3      11.7227              0.0000     1.0919 f
+  cpu/icache_addr[8] (Riscv141)                                             0.0000     1.0919 f
+  icache_addr[8] (net)                                 11.7227              0.0000     1.0919 f
+  mem/icache_addr[8] (Memory141)                                            0.0000     1.0919 f
+  mem/icache_addr[8] (net)                             11.7227              0.0000     1.0919 f
+  mem/icache/cpu_req_addr[6] (cache_0)                                      0.0000     1.0919 f
+  mem/icache/cpu_req_addr[6] (net)                     11.7227              0.0000     1.0919 f
+  mem/icache/U291/A2 (MUX21X2_RVT)                                0.0289    0.0010 *   1.0929 f
+  mem/icache/U291/Y (MUX21X2_RVT)                                 0.0552    0.0777     1.1706 f
+  mem/icache/data_idx[6] (net)                  1      12.9962              0.0000     1.1706 f
+  mem/icache/data/A1[4] (SRAM1RW256x128_new)                      0.0736    0.0016 *   1.1722 f
+  data arrival time                                                                    1.1722
+
+  clock clk (rise edge)                                                     1.2000     1.2000
+  clock network delay (ideal)                                               0.0000     1.2000
+  clock uncertainty                                                        -0.0600     1.1400
+  mem/icache/data/CE1 (SRAM1RW256x128_new)                                  0.0000     1.1400 r
+  library setup time                                                       -0.0100     1.1300
+  data required time                                                                   1.1300
+  ----------------------------------------------------------------------------------------------
+  data required time                                                                   1.1300
+  data arrival time                                                                   -1.1722
+  ----------------------------------------------------------------------------------------------
+  slack (VIOLATED)                                                                    -0.0422
+
+
+  Startpoint: cpu/dpath/InstrE_reg_20_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: mem/icache/data
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                       Fanout       Cap     Trans      Incr       Path
+  ----------------------------------------------------------------------------------------------
+  clock clk (rise edge)                                                     0.0000     0.0000
+  clock network delay (ideal)                                               0.0000     0.0000
+  cpu/dpath/InstrE_reg_20_/CLK (DFFX2_RVT)                        0.0000    0.0000 #   0.0000 r
+  cpu/dpath/InstrE_reg_20_/Q (DFFX2_RVT)                          0.0458    0.1163     0.1163 f
+  cpu/dpath/datapath_contents[20] (net)         7      12.1331              0.0000     0.1163 f
+  cpu/dpath/U1130/A1 (AND2X1_RVT)                                 0.0458    0.0005 *   0.1168 f
+  cpu/dpath/U1130/Y (AND2X1_RVT)                                  0.0265    0.0475     0.1643 f
+  cpu/dpath/n4807 (net)                         4       2.7612              0.0000     0.1643 f
+  cpu/dpath/U1129/A1 (AND2X4_RVT)                                 0.0265    0.0000 *   0.1643 f
+  cpu/dpath/U1129/Y (AND2X4_RVT)                                  0.0369    0.0613     0.2256 f
+  cpu/dpath/n3665 (net)                         6      13.7376              0.0000     0.2256 f
+  cpu/dpath/U7010/A (NBUFFX8_RVT)                                 0.0369    0.0004 *   0.2261 f
+  cpu/dpath/U7010/Y (NBUFFX8_RVT)                                 0.0233    0.0403     0.2664 f
+  cpu/dpath/n8071 (net)                        17      18.1996              0.0000     0.2664 f
+  cpu/dpath/U7833/A (INVX4_RVT)                                   0.0233    0.0000 *   0.2664 f
+  cpu/dpath/U7833/Y (INVX4_RVT)                                   0.0141    0.0121     0.2786 r
+  cpu/dpath/n8892 (net)                         1       2.6008              0.0000     0.2786 r
+  cpu/dpath/U3421/A (INVX4_RVT)                                   0.0141    0.0000 *   0.2786 r
+  cpu/dpath/U3421/Y (INVX4_RVT)                                   0.0171    0.0155     0.2940 f
+  cpu/dpath/n9212 (net)                         4       8.0260              0.0000     0.2940 f
+  cpu/dpath/U207/A4 (AOI22X1_RVT)                                 0.0171    0.0003 *   0.2943 f
+  cpu/dpath/U207/Y (AOI22X1_RVT)                                  0.0139    0.0430     0.3373 r
+  cpu/dpath/n134 (net)                          1       0.8145              0.0000     0.3373 r
+  cpu/dpath/U8296/A2 (NAND4X0_RVT)                                0.0139    0.0000 *   0.3373 r
+  cpu/dpath/U8296/Y (NAND4X0_RVT)                                 0.0369    0.0311     0.3684 f
+  cpu/dpath/n9246 (net)                         1       0.5606              0.0000     0.3684 f
+  cpu/dpath/U8190/A2 (OAI22X2_RVT)                                0.0369    0.0000 *   0.3684 f
+  cpu/dpath/U8190/Y (OAI22X2_RVT)                                 0.0176    0.0614     0.4298 r
+  cpu/dpath/n9532 (net)                         1       2.7229              0.0000     0.4298 r
+  cpu/dpath/U3273/A (INVX4_RVT)                                   0.0176    0.0000 *   0.4298 r
+  cpu/dpath/U3273/Y (INVX4_RVT)                                   0.0227    0.0191     0.4489 f
+  cpu/dpath/n6091 (net)                         2      11.2607              0.0000     0.4489 f
+  cpu/dpath/U184/A1 (AO21X2_RVT)                                  0.0227    0.0012 *   0.4501 f
+  cpu/dpath/U184/Y (AO21X2_RVT)                                   0.0327    0.0602     0.5103 f
+  cpu/dpath/n994 (net)                          3       6.2574              0.0000     0.5103 f
+  cpu/dpath/Dut5/B[5] (BranchPro)                                           0.0000     0.5103 f
+  cpu/dpath/Dut5/B[5] (net)                             6.2574              0.0000     0.5103 f
+  cpu/dpath/Dut5/U37/A (INVX2_RVT)                                0.0327    0.0002 *   0.5105 f
+  cpu/dpath/Dut5/U37/Y (INVX2_RVT)                                0.0177    0.0140     0.5245 r
+  cpu/dpath/Dut5/n322 (net)                     2       1.0192              0.0000     0.5245 r
+  cpu/dpath/Dut5/U253/A1 (AND2X1_RVT)                             0.0177    0.0000 *   0.5245 r
+  cpu/dpath/Dut5/U253/Y (AND2X1_RVT)                              0.0183    0.0304     0.5549 r
+  cpu/dpath/Dut5/n199 (net)                     2       1.2562              0.0000     0.5549 r
+  cpu/dpath/Dut5/U240/A4 (OA22X1_RVT)                             0.0183    0.0000 *   0.5549 r
+  cpu/dpath/Dut5/U240/Y (OA22X1_RVT)                              0.0202    0.0362     0.5911 r
+  cpu/dpath/Dut5/n203 (net)                     1       0.8295              0.0000     0.5911 r
+  cpu/dpath/Dut5/U143/A2 (OA21X1_RVT)                             0.0202    0.0000 *   0.5912 r
+  cpu/dpath/Dut5/U143/Y (OA21X1_RVT)                              0.0226    0.0419     0.6330 r
+  cpu/dpath/Dut5/n258 (net)                     2       1.6688              0.0000     0.6330 r
+  cpu/dpath/Dut5/U266/A2 (AO21X1_RVT)                             0.0226    0.0000 *   0.6330 r
+  cpu/dpath/Dut5/U266/Y (AO21X1_RVT)                              0.0184    0.0427     0.6758 r
+  cpu/dpath/Dut5/n444 (net)                     1       0.5092              0.0000     0.6758 r
+  cpu/dpath/Dut5/U265/A1 (AO21X1_RVT)                             0.0184    0.0000 *   0.6758 r
+  cpu/dpath/Dut5/U265/Y (AO21X1_RVT)                              0.0206    0.0436     0.7193 r
+  cpu/dpath/Dut5/n87 (net)                      1       0.9935              0.0000     0.7193 r
+  cpu/dpath/Dut5/U268/A3 (AO22X1_RVT)                             0.0206    0.0000 *   0.7193 r
+  cpu/dpath/Dut5/U268/Y (AO22X1_RVT)                              0.0225    0.0384     0.7577 r
+  cpu/dpath/Dut5/n446 (net)                     1       1.2164              0.0000     0.7577 r
+  cpu/dpath/Dut5/U270/A1 (XNOR2X2_RVT)                            0.0225    0.0000 *   0.7577 r
+  cpu/dpath/Dut5/U270/Y (XNOR2X2_RVT)                             0.0210    0.0519     0.8096 r
+  cpu/dpath/Dut5/n84 (net)                      1       0.7600              0.0000     0.8096 r
+  cpu/dpath/Dut5/U218/A1 (NAND3X0_RVT)                            0.0210    0.0000 *   0.8096 r
+  cpu/dpath/Dut5/U218/Y (NAND3X0_RVT)                             0.0294    0.0230     0.8326 f
+  cpu/dpath/Dut5/n450 (net)                     1       0.4673              0.0000     0.8326 f
+  cpu/dpath/Dut5/U221/A1 (AND3X1_RVT)                             0.0294    0.0000 *   0.8326 f
+  cpu/dpath/Dut5/U221/Y (AND3X1_RVT)                              0.0279    0.0486     0.8813 f
+  cpu/dpath/Dut5/n451 (net)                     1       2.6290              0.0000     0.8813 f
+  cpu/dpath/Dut5/U274/A (INVX4_RVT)                               0.0279    0.0000 *   0.8813 f
+  cpu/dpath/Dut5/U274/Y (INVX4_RVT)                               0.0209    0.0196     0.9009 r
+  cpu/dpath/Dut5/Branchout (net)                3       7.7159              0.0000     0.9009 r
+  cpu/dpath/Dut5/Branchout (BranchPro)                                      0.0000     0.9009 r
+  cpu/dpath/Branchout (net)                             7.7159              0.0000     0.9009 r
+  cpu/dpath/U8711/A1 (AND2X2_RVT)                                 0.0209    0.0005 *   0.9013 r
+  cpu/dpath/U8711/Y (AND2X2_RVT)                                  0.0279    0.0445     0.9458 r
+  cpu/dpath/n9703 (net)                         1       5.1018              0.0000     0.9458 r
+  cpu/dpath/U8712/A (INVX8_RVT)                                   0.0279    0.0000 *   0.9458 r
+  cpu/dpath/U8712/Y (INVX8_RVT)                                   0.0195    0.0142     0.9600 f
+  cpu/dpath/n3856 (net)                        10      11.4764              0.0000     0.9600 f
+  cpu/dpath/U2957/A1 (NAND3X0_RVT)                                0.0195    0.0002 *   0.9602 f
+  cpu/dpath/U2957/Y (NAND3X0_RVT)                                 0.0230    0.0195     0.9797 r
+  cpu/dpath/n3805 (net)                         1       0.5980              0.0000     0.9797 r
+  cpu/dpath/U82/A1 (NAND4X0_RVT)                                  0.0230    0.0000 *   0.9797 r
+  cpu/dpath/U82/Y (NAND4X0_RVT)                                   0.0926    0.0638     1.0435 f
+  cpu/dpath/icache_addr[8] (net)                2       3.4496              0.0000     1.0435 f
+  cpu/dpath/icache_addr[8] (datapath)                                       0.0000     1.0435 f
+  cpu/n10 (net)                                         3.4496              0.0000     1.0435 f
+  cpu/U1/A (NBUFFX8_RVT)                                          0.0926    0.0001 *   1.0436 f
+  cpu/U1/Y (NBUFFX8_RVT)                                          0.0289    0.0482     1.0918 f
+  cpu/icache_addr[8] (net)                      3      11.7227              0.0000     1.0918 f
+  cpu/icache_addr[8] (Riscv141)                                             0.0000     1.0918 f
+  icache_addr[8] (net)                                 11.7227              0.0000     1.0918 f
+  mem/icache_addr[8] (Memory141)                                            0.0000     1.0918 f
+  mem/icache_addr[8] (net)                             11.7227              0.0000     1.0918 f
+  mem/icache/cpu_req_addr[6] (cache_0)                                      0.0000     1.0918 f
+  mem/icache/cpu_req_addr[6] (net)                     11.7227              0.0000     1.0918 f
+  mem/icache/U291/A2 (MUX21X2_RVT)                                0.0289    0.0010 *   1.0927 f
+  mem/icache/U291/Y (MUX21X2_RVT)                                 0.0552    0.0777     1.1704 f
+  mem/icache/data_idx[6] (net)                  1      12.9962              0.0000     1.1704 f
+  mem/icache/data/A1[4] (SRAM1RW256x128_new)                      0.0736    0.0016 *   1.1721 f
+  data arrival time                                                                    1.1721
+
+  clock clk (rise edge)                                                     1.2000     1.2000
+  clock network delay (ideal)                                               0.0000     1.2000
+  clock uncertainty                                                        -0.0600     1.1400
+  mem/icache/data/CE1 (SRAM1RW256x128_new)                                  0.0000     1.1400 r
+  library setup time                                                       -0.0100     1.1300
+  data required time                                                                   1.1300
+  ----------------------------------------------------------------------------------------------
+  data required time                                                                   1.1300
+  data arrival time                                                                   -1.1721
+  ----------------------------------------------------------------------------------------------
+  slack (VIOLATED)                                                                    -0.0421
+
+
+  Startpoint: cpu/dpath/InstrE_reg_20_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: mem/icache/data
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                       Fanout       Cap     Trans      Incr       Path
+  ----------------------------------------------------------------------------------------------
+  clock clk (rise edge)                                                     0.0000     0.0000
+  clock network delay (ideal)                                               0.0000     0.0000
+  cpu/dpath/InstrE_reg_20_/CLK (DFFX2_RVT)                        0.0000    0.0000 #   0.0000 r
+  cpu/dpath/InstrE_reg_20_/Q (DFFX2_RVT)                          0.0458    0.1163     0.1163 f
+  cpu/dpath/datapath_contents[20] (net)         7      12.1331              0.0000     0.1163 f
+  cpu/dpath/U8030/A2 (AND2X1_RVT)                                 0.0458    0.0005 *   0.1168 f
+  cpu/dpath/U8030/Y (AND2X1_RVT)                                  0.0220    0.0458     0.1626 f
+  cpu/dpath/n9028 (net)                         2       1.7491              0.0000     0.1626 f
+  cpu/dpath/U1084/A1 (AND2X4_RVT)                                 0.0220    0.0000 *   0.1626 f
+  cpu/dpath/U1084/Y (AND2X4_RVT)                                  0.0304    0.0530     0.2157 f
+  cpu/dpath/n5991 (net)                         3       8.2814              0.0000     0.2157 f
+  cpu/dpath/U7025/A (NBUFFX16_RVT)                                0.0304    0.0001 *   0.2157 f
+  cpu/dpath/U7025/Y (NBUFFX16_RVT)                                0.0174    0.0347     0.2505 f
+  cpu/dpath/n8086 (net)                        14      15.6117              0.0000     0.2505 f
+  cpu/dpath/U8588/A3 (AO22X1_RVT)                                 0.0174    0.0002 *   0.2507 f
+  cpu/dpath/U8588/Y (AO22X1_RVT)                                  0.0146    0.0280     0.2787 f
+  cpu/dpath/n9515 (net)                         1       0.5854              0.0000     0.2787 f
+  cpu/dpath/U8568/A2 (NOR4X1_RVT)                                 0.0146    0.0000 *   0.2787 f
+  cpu/dpath/U8568/Y (NOR4X1_RVT)                                  0.0150    0.0641     0.3429 r
+  cpu/dpath/n332 (net)                          1       0.8838              0.0000     0.3429 r
+  cpu/dpath/U8031/A1 (NAND3X0_RVT)                                0.0150    0.0000 *   0.3429 r
+  cpu/dpath/U8031/Y (NAND3X0_RVT)                                 0.0276    0.0221     0.3650 f
+  cpu/dpath/n9487 (net)                         1       0.4711              0.0000     0.3650 f
+  cpu/dpath/U8555/A1 (AO21X2_RVT)                                 0.0276    0.0000 *   0.3650 f
+  cpu/dpath/U8555/Y (AO21X2_RVT)                                  0.0399    0.0683     0.4333 f
+  cpu/dpath/n6093 (net)                         2       9.1057              0.0000     0.4333 f
+  cpu/dpath/U8724/A1 (AOI21X2_RVT)                                0.0399    0.0008 *   0.4340 f
+  cpu/dpath/U8724/Y (AOI21X2_RVT)                                 0.0251    0.0727     0.5067 r
+  cpu/dpath/n9686 (net)                         1       5.1238              0.0000     0.5067 r
+  cpu/dpath/U8725/A (INVX8_RVT)                                   0.0251    0.0000 *   0.5067 r
+  cpu/dpath/U8725/Y (INVX8_RVT)                                   0.0202    0.0159     0.5226 f
+  cpu/dpath/n752 (net)                          5      14.4135              0.0000     0.5226 f
+  cpu/dpath/Dut5/B[3] (BranchPro)                                           0.0000     0.5226 f
+  cpu/dpath/Dut5/B[3] (net)                            14.4135              0.0000     0.5226 f
+  cpu/dpath/Dut5/U149/A2 (OR2X1_RVT)                              0.0202    0.0004 *   0.5230 f
+  cpu/dpath/Dut5/U149/Y (OR2X1_RVT)                               0.0127    0.0267     0.5497 f
+  cpu/dpath/Dut5/n400 (net)                     1       0.5151              0.0000     0.5497 f
+  cpu/dpath/Dut5/U75/A3 (AO22X1_RVT)                              0.0127    0.0000 *   0.5497 f
+  cpu/dpath/Dut5/U75/Y (AO22X1_RVT)                               0.0152    0.0275     0.5771 f
+  cpu/dpath/Dut5/n335 (net)                     1       0.7923              0.0000     0.5771 f
+  cpu/dpath/Dut5/U74/A (INVX1_RVT)                                0.0152    0.0000 *   0.5771 f
+  cpu/dpath/Dut5/U74/Y (INVX1_RVT)                                0.0110    0.0111     0.5882 r
+  cpu/dpath/Dut5/n338 (net)                     1       0.4825              0.0000     0.5882 r
+  cpu/dpath/Dut5/U86/A1 (AO21X1_RVT)                              0.0110    0.0000 *   0.5882 r
+  cpu/dpath/Dut5/U86/Y (AO21X1_RVT)                               0.0240    0.0453     0.6335 r
+  cpu/dpath/Dut5/n256 (net)                     2       1.6996              0.0000     0.6335 r
+  cpu/dpath/Dut5/U266/A1 (AO21X1_RVT)                             0.0240    0.0000 *   0.6335 r
+  cpu/dpath/Dut5/U266/Y (AO21X1_RVT)                              0.0184    0.0422     0.6758 r
+  cpu/dpath/Dut5/n444 (net)                     1       0.5092              0.0000     0.6758 r
+  cpu/dpath/Dut5/U265/A1 (AO21X1_RVT)                             0.0184    0.0000 *   0.6758 r
+  cpu/dpath/Dut5/U265/Y (AO21X1_RVT)                              0.0206    0.0436     0.7193 r
+  cpu/dpath/Dut5/n87 (net)                      1       0.9935              0.0000     0.7193 r
+  cpu/dpath/Dut5/U268/A3 (AO22X1_RVT)                             0.0206    0.0000 *   0.7193 r
+  cpu/dpath/Dut5/U268/Y (AO22X1_RVT)                              0.0225    0.0384     0.7577 r
+  cpu/dpath/Dut5/n446 (net)                     1       1.2164              0.0000     0.7577 r
+  cpu/dpath/Dut5/U270/A1 (XNOR2X2_RVT)                            0.0225    0.0000 *   0.7577 r
+  cpu/dpath/Dut5/U270/Y (XNOR2X2_RVT)                             0.0210    0.0519     0.8096 r
+  cpu/dpath/Dut5/n84 (net)                      1       0.7600              0.0000     0.8096 r
+  cpu/dpath/Dut5/U218/A1 (NAND3X0_RVT)                            0.0210    0.0000 *   0.8096 r
+  cpu/dpath/Dut5/U218/Y (NAND3X0_RVT)                             0.0294    0.0230     0.8326 f
+  cpu/dpath/Dut5/n450 (net)                     1       0.4673              0.0000     0.8326 f
+  cpu/dpath/Dut5/U221/A1 (AND3X1_RVT)                             0.0294    0.0000 *   0.8326 f
+  cpu/dpath/Dut5/U221/Y (AND3X1_RVT)                              0.0279    0.0486     0.8813 f
+  cpu/dpath/Dut5/n451 (net)                     1       2.6290              0.0000     0.8813 f
+  cpu/dpath/Dut5/U274/A (INVX4_RVT)                               0.0279    0.0000 *   0.8813 f
+  cpu/dpath/Dut5/U274/Y (INVX4_RVT)                               0.0209    0.0196     0.9009 r
+  cpu/dpath/Dut5/Branchout (net)                3       7.7159              0.0000     0.9009 r
+  cpu/dpath/Dut5/Branchout (BranchPro)                                      0.0000     0.9009 r
+  cpu/dpath/Branchout (net)                             7.7159              0.0000     0.9009 r
+  cpu/dpath/U8711/A1 (AND2X2_RVT)                                 0.0209    0.0005 *   0.9013 r
+  cpu/dpath/U8711/Y (AND2X2_RVT)                                  0.0279    0.0445     0.9458 r
+  cpu/dpath/n9703 (net)                         1       5.1018              0.0000     0.9458 r
+  cpu/dpath/U8712/A (INVX8_RVT)                                   0.0279    0.0000 *   0.9458 r
+  cpu/dpath/U8712/Y (INVX8_RVT)                                   0.0195    0.0142     0.9600 f
+  cpu/dpath/n3856 (net)                        10      11.4764              0.0000     0.9600 f
+  cpu/dpath/U2957/A1 (NAND3X0_RVT)                                0.0195    0.0002 *   0.9602 f
+  cpu/dpath/U2957/Y (NAND3X0_RVT)                                 0.0230    0.0195     0.9796 r
+  cpu/dpath/n3805 (net)                         1       0.5980              0.0000     0.9796 r
+  cpu/dpath/U82/A1 (NAND4X0_RVT)                                  0.0230    0.0000 *   0.9796 r
+  cpu/dpath/U82/Y (NAND4X0_RVT)                                   0.0926    0.0638     1.0435 f
+  cpu/dpath/icache_addr[8] (net)                2       3.4496              0.0000     1.0435 f
+  cpu/dpath/icache_addr[8] (datapath)                                       0.0000     1.0435 f
+  cpu/n10 (net)                                         3.4496              0.0000     1.0435 f
+  cpu/U1/A (NBUFFX8_RVT)                                          0.0926    0.0001 *   1.0436 f
+  cpu/U1/Y (NBUFFX8_RVT)                                          0.0289    0.0482     1.0917 f
+  cpu/icache_addr[8] (net)                      3      11.7227              0.0000     1.0917 f
+  cpu/icache_addr[8] (Riscv141)                                             0.0000     1.0917 f
+  icache_addr[8] (net)                                 11.7227              0.0000     1.0917 f
+  mem/icache_addr[8] (Memory141)                                            0.0000     1.0917 f
+  mem/icache_addr[8] (net)                             11.7227              0.0000     1.0917 f
+  mem/icache/cpu_req_addr[6] (cache_0)                                      0.0000     1.0917 f
+  mem/icache/cpu_req_addr[6] (net)                     11.7227              0.0000     1.0917 f
+  mem/icache/U291/A2 (MUX21X2_RVT)                                0.0289    0.0010 *   1.0927 f
+  mem/icache/U291/Y (MUX21X2_RVT)                                 0.0552    0.0777     1.1704 f
+  mem/icache/data_idx[6] (net)                  1      12.9962              0.0000     1.1704 f
+  mem/icache/data/A1[4] (SRAM1RW256x128_new)                      0.0736    0.0016 *   1.1721 f
+  data arrival time                                                                    1.1721
+
+  clock clk (rise edge)                                                     1.2000     1.2000
+  clock network delay (ideal)                                               0.0000     1.2000
+  clock uncertainty                                                        -0.0600     1.1400
+  mem/icache/data/CE1 (SRAM1RW256x128_new)                                  0.0000     1.1400 r
+  library setup time                                                       -0.0100     1.1300
+  data required time                                                                   1.1300
+  ----------------------------------------------------------------------------------------------
+  data required time                                                                   1.1300
+  data arrival time                                                                   -1.1721
+  ----------------------------------------------------------------------------------------------
+  slack (VIOLATED)                                                                    -0.0421
+
+
+  Startpoint: cpu/dpath/InstrE_reg_20_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: mem/icache/data
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                       Fanout       Cap     Trans      Incr       Path
+  ----------------------------------------------------------------------------------------------
+  clock clk (rise edge)                                                     0.0000     0.0000
+  clock network delay (ideal)                                               0.0000     0.0000
+  cpu/dpath/InstrE_reg_20_/CLK (DFFX2_RVT)                        0.0000    0.0000 #   0.0000 r
+  cpu/dpath/InstrE_reg_20_/Q (DFFX2_RVT)                          0.0458    0.1163     0.1163 f
+  cpu/dpath/datapath_contents[20] (net)         7      12.1331              0.0000     0.1163 f
+  cpu/dpath/U8030/A2 (AND2X1_RVT)                                 0.0458    0.0005 *   0.1168 f
+  cpu/dpath/U8030/Y (AND2X1_RVT)                                  0.0220    0.0458     0.1626 f
+  cpu/dpath/n9028 (net)                         2       1.7491              0.0000     0.1626 f
+  cpu/dpath/U1084/A1 (AND2X4_RVT)                                 0.0220    0.0000 *   0.1626 f
+  cpu/dpath/U1084/Y (AND2X4_RVT)                                  0.0304    0.0530     0.2157 f
+  cpu/dpath/n5991 (net)                         3       8.2814              0.0000     0.2157 f
+  cpu/dpath/U7025/A (NBUFFX16_RVT)                                0.0304    0.0001 *   0.2157 f
+  cpu/dpath/U7025/Y (NBUFFX16_RVT)                                0.0174    0.0347     0.2505 f
+  cpu/dpath/n8086 (net)                        14      15.6117              0.0000     0.2505 f
+  cpu/dpath/U2131/A1 (NAND2X0_RVT)                                0.0174    0.0002 *   0.2507 f
+  cpu/dpath/U2131/Y (NAND2X0_RVT)                                 0.0256    0.0213     0.2720 r
+  cpu/dpath/n2937 (net)                         1       0.6187              0.0000     0.2720 r
+  cpu/dpath/U7928/A1 (AND2X1_RVT)                                 0.0256    0.0000 *   0.2720 r
+  cpu/dpath/U7928/Y (AND2X1_RVT)                                  0.0144    0.0285     0.3005 r
+  cpu/dpath/n9069 (net)                         1       0.5491              0.0000     0.3005 r
+  cpu/dpath/U7849/A1 (NAND4X0_RVT)                                0.0144    0.0000 *   0.3005 r
+  cpu/dpath/U7849/Y (NAND4X0_RVT)                                 0.0387    0.0264     0.3269 f
+  cpu/dpath/n8906 (net)                         1       0.5771              0.0000     0.3269 f
+  cpu/dpath/U7853/A2 (OR3X1_RVT)                                  0.0387    0.0000 *   0.3269 f
+  cpu/dpath/U7853/Y (OR3X1_RVT)                                   0.0191    0.0466     0.3735 f
+  cpu/dpath/n840 (net)                          1       0.8927              0.0000     0.3735 f
+  cpu/dpath/U8743/A2 (MUX21X2_RVT)                                0.0191    0.0000 *   0.3735 f
+  cpu/dpath/U8743/Y (MUX21X2_RVT)                                 0.0437    0.0657     0.4392 f
+  cpu/dpath/n6096 (net)                         2       8.9130              0.0000     0.4392 f
+  cpu/dpath/U2178/A1 (AO21X2_RVT)                                 0.0437    0.0007 *   0.4399 f
+  cpu/dpath/U2178/Y (AO21X2_RVT)                                  0.0425    0.0766     0.5165 f
+  cpu/dpath/SrcB[0] (net)                       4      10.0989              0.0000     0.5165 f
+  cpu/dpath/Dut5/B[0] (BranchPro)                                           0.0000     0.5165 f
+  cpu/dpath/Dut5/B[0] (net)                            10.0989              0.0000     0.5165 f
+  cpu/dpath/Dut5/U188/A2 (AO21X1_RVT)                             0.0425    0.0002 *   0.5168 f
+  cpu/dpath/Dut5/U188/Y (AO21X1_RVT)                              0.0157    0.0484     0.5652 f
+  cpu/dpath/Dut5/n387 (net)                     1       0.5141              0.0000     0.5652 f
+  cpu/dpath/Dut5/U118/A2 (NAND3X0_RVT)                            0.0157    0.0000 *   0.5652 f
+  cpu/dpath/Dut5/U118/Y (NAND3X0_RVT)                             0.0214    0.0195     0.5847 r
+  cpu/dpath/Dut5/n402 (net)                     1       0.6118              0.0000     0.5847 r
+  cpu/dpath/Dut5/U86/A2 (AO21X1_RVT)                              0.0214    0.0000 *   0.5847 r
+  cpu/dpath/Dut5/U86/Y (AO21X1_RVT)                               0.0240    0.0487     0.6334 r
+  cpu/dpath/Dut5/n256 (net)                     2       1.6996              0.0000     0.6334 r
+  cpu/dpath/Dut5/U266/A1 (AO21X1_RVT)                             0.0240    0.0000 *   0.6334 r
+  cpu/dpath/Dut5/U266/Y (AO21X1_RVT)                              0.0184    0.0422     0.6756 r
+  cpu/dpath/Dut5/n444 (net)                     1       0.5092              0.0000     0.6756 r
+  cpu/dpath/Dut5/U265/A1 (AO21X1_RVT)                             0.0184    0.0000 *   0.6756 r
+  cpu/dpath/Dut5/U265/Y (AO21X1_RVT)                              0.0206    0.0436     0.7192 r
+  cpu/dpath/Dut5/n87 (net)                      1       0.9935              0.0000     0.7192 r
+  cpu/dpath/Dut5/U268/A3 (AO22X1_RVT)                             0.0206    0.0000 *   0.7192 r
+  cpu/dpath/Dut5/U268/Y (AO22X1_RVT)                              0.0225    0.0384     0.7575 r
+  cpu/dpath/Dut5/n446 (net)                     1       1.2164              0.0000     0.7575 r
+  cpu/dpath/Dut5/U270/A1 (XNOR2X2_RVT)                            0.0225    0.0000 *   0.7575 r
+  cpu/dpath/Dut5/U270/Y (XNOR2X2_RVT)                             0.0210    0.0519     0.8094 r
+  cpu/dpath/Dut5/n84 (net)                      1       0.7600              0.0000     0.8094 r
+  cpu/dpath/Dut5/U218/A1 (NAND3X0_RVT)                            0.0210    0.0000 *   0.8094 r
+  cpu/dpath/Dut5/U218/Y (NAND3X0_RVT)                             0.0294    0.0230     0.8325 f
+  cpu/dpath/Dut5/n450 (net)                     1       0.4673              0.0000     0.8325 f
+  cpu/dpath/Dut5/U221/A1 (AND3X1_RVT)                             0.0294    0.0000 *   0.8325 f
+  cpu/dpath/Dut5/U221/Y (AND3X1_RVT)                              0.0279    0.0486     0.8811 f
+  cpu/dpath/Dut5/n451 (net)                     1       2.6290              0.0000     0.8811 f
+  cpu/dpath/Dut5/U274/A (INVX4_RVT)                               0.0279    0.0000 *   0.8811 f
+  cpu/dpath/Dut5/U274/Y (INVX4_RVT)                               0.0209    0.0196     0.9007 r
+  cpu/dpath/Dut5/Branchout (net)                3       7.7159              0.0000     0.9007 r
+  cpu/dpath/Dut5/Branchout (BranchPro)                                      0.0000     0.9007 r
+  cpu/dpath/Branchout (net)                             7.7159              0.0000     0.9007 r
+  cpu/dpath/U8711/A1 (AND2X2_RVT)                                 0.0209    0.0005 *   0.9012 r
+  cpu/dpath/U8711/Y (AND2X2_RVT)                                  0.0279    0.0445     0.9456 r
+  cpu/dpath/n9703 (net)                         1       5.1018              0.0000     0.9456 r
+  cpu/dpath/U8712/A (INVX8_RVT)                                   0.0279    0.0000 *   0.9456 r
+  cpu/dpath/U8712/Y (INVX8_RVT)                                   0.0195    0.0142     0.9599 f
+  cpu/dpath/n3856 (net)                        10      11.4764              0.0000     0.9599 f
+  cpu/dpath/U2957/A1 (NAND3X0_RVT)                                0.0195    0.0002 *   0.9600 f
+  cpu/dpath/U2957/Y (NAND3X0_RVT)                                 0.0230    0.0195     0.9795 r
+  cpu/dpath/n3805 (net)                         1       0.5980              0.0000     0.9795 r
+  cpu/dpath/U82/A1 (NAND4X0_RVT)                                  0.0230    0.0000 *   0.9795 r
+  cpu/dpath/U82/Y (NAND4X0_RVT)                                   0.0926    0.0638     1.0433 f
+  cpu/dpath/icache_addr[8] (net)                2       3.4496              0.0000     1.0433 f
+  cpu/dpath/icache_addr[8] (datapath)                                       0.0000     1.0433 f
+  cpu/n10 (net)                                         3.4496              0.0000     1.0433 f
+  cpu/U1/A (NBUFFX8_RVT)                                          0.0926    0.0001 *   1.0434 f
+  cpu/U1/Y (NBUFFX8_RVT)                                          0.0289    0.0482     1.0916 f
+  cpu/icache_addr[8] (net)                      3      11.7227              0.0000     1.0916 f
+  cpu/icache_addr[8] (Riscv141)                                             0.0000     1.0916 f
+  icache_addr[8] (net)                                 11.7227              0.0000     1.0916 f
+  mem/icache_addr[8] (Memory141)                                            0.0000     1.0916 f
+  mem/icache_addr[8] (net)                             11.7227              0.0000     1.0916 f
+  mem/icache/cpu_req_addr[6] (cache_0)                                      0.0000     1.0916 f
+  mem/icache/cpu_req_addr[6] (net)                     11.7227              0.0000     1.0916 f
+  mem/icache/U291/A2 (MUX21X2_RVT)                                0.0289    0.0010 *   1.0926 f
+  mem/icache/U291/Y (MUX21X2_RVT)                                 0.0552    0.0777     1.1703 f
+  mem/icache/data_idx[6] (net)                  1      12.9962              0.0000     1.1703 f
+  mem/icache/data/A1[4] (SRAM1RW256x128_new)                      0.0736    0.0016 *   1.1719 f
+  data arrival time                                                                    1.1719
+
+  clock clk (rise edge)                                                     1.2000     1.2000
+  clock network delay (ideal)                                               0.0000     1.2000
+  clock uncertainty                                                        -0.0600     1.1400
+  mem/icache/data/CE1 (SRAM1RW256x128_new)                                  0.0000     1.1400 r
+  library setup time                                                       -0.0100     1.1300
+  data required time                                                                   1.1300
+  ----------------------------------------------------------------------------------------------
+  data required time                                                                   1.1300
+  data arrival time                                                                   -1.1719
+  ----------------------------------------------------------------------------------------------
+  slack (VIOLATED)                                                                    -0.0419
+
+
+  Startpoint: cpu/dpath/InstrE_reg_22_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: mem/icache/data
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                       Fanout       Cap     Trans      Incr       Path
+  ----------------------------------------------------------------------------------------------
+  clock clk (rise edge)                                                     0.0000     0.0000
+  clock network delay (ideal)                                               0.0000     0.0000
+  cpu/dpath/InstrE_reg_22_/CLK (DFFX1_RVT)                        0.0000    0.0000 #   0.0000 r
+  cpu/dpath/InstrE_reg_22_/Q (DFFX1_RVT)                          0.0240    0.0899     0.0899 f
+  cpu/dpath/n9764 (net)                         1       2.1337              0.0000     0.0899 f
+  cpu/dpath/U8081/A (NBUFFX16_RVT)                                0.0240    0.0000 *   0.0899 f
+  cpu/dpath/U8081/Y (NBUFFX16_RVT)                                0.0179    0.0338     0.1237 f
+  cpu/dpath/datapath_contents[22] (net)        12      20.1535              0.0000     0.1237 f
+  cpu/dpath/U3106/A (INVX8_RVT)                                   0.0179    0.0013 *   0.1250 f
+  cpu/dpath/U3106/Y (INVX8_RVT)                                   0.0106    0.0091     0.1341 r
+  cpu/dpath/n6217 (net)                         5       2.9282              0.0000     0.1341 r
+  cpu/dpath/U8599/A2 (AND2X1_RVT)                                 0.0106    0.0000 *   0.1341 r
+  cpu/dpath/U8599/Y (AND2X1_RVT)                                  0.0172    0.0312     0.1653 r
+  cpu/dpath/n9696 (net)                         1       1.4345              0.0000     0.1653 r
+  cpu/dpath/U1129/A2 (AND2X4_RVT)                                 0.0172    0.0000 *   0.1653 r
+  cpu/dpath/U1129/Y (AND2X4_RVT)                                  0.0377    0.0592     0.2245 r
+  cpu/dpath/n3665 (net)                         6      13.7376              0.0000     0.2245 r
+  cpu/dpath/U8533/A (NBUFFX16_RVT)                                0.0377    0.0000 *   0.2245 r
+  cpu/dpath/U8533/Y (NBUFFX16_RVT)                                0.0210    0.0379     0.2624 r
+  cpu/dpath/n9540 (net)                        20      20.9345              0.0000     0.2624 r
+  cpu/dpath/U6934/A (INVX2_RVT)                                   0.0210    0.0004 *   0.2629 r
+  cpu/dpath/U6934/Y (INVX2_RVT)                                   0.0118    0.0077     0.2706 f
+  cpu/dpath/n9121 (net)                         1       0.4682              0.0000     0.2706 f
+  cpu/dpath/U8146/A4 (OA22X1_RVT)                                 0.0118    0.0000 *   0.2706 f
+  cpu/dpath/U8146/Y (OA22X1_RVT)                                  0.0192    0.0326     0.3032 f
+  cpu/dpath/n9376 (net)                         1       0.7572              0.0000     0.3032 f
+  cpu/dpath/U7815/A1 (NAND4X0_RVT)                                0.0192    0.0000 *   0.3032 f
+  cpu/dpath/U7815/Y (NAND4X0_RVT)                                 0.0309    0.0219     0.3251 r
+  cpu/dpath/n9161 (net)                         1       0.6185              0.0000     0.3251 r
+  cpu/dpath/U8194/A3 (OR3X1_RVT)                                  0.0309    0.0000 *   0.3251 r
+  cpu/dpath/U8194/Y (OR3X1_RVT)                                   0.0183    0.0378     0.3629 r
+  cpu/dpath/n2817 (net)                         1       0.5337              0.0000     0.3629 r
+  cpu/dpath/U2014/A1 (AO22X2_RVT)                                 0.0183    0.0000 *   0.3629 r
+  cpu/dpath/U2014/Y (AO22X2_RVT)                                  0.0471    0.0756     0.4385 r
+  cpu/dpath/n6087 (net)                         2       9.9158              0.0000     0.4385 r
+  cpu/dpath/U1976/A1 (AO21X2_RVT)                                 0.0471    0.0009 *   0.4394 r
+  cpu/dpath/U1976/Y (AO21X2_RVT)                                  0.0405    0.0733     0.5126 r
+  cpu/dpath/SrcB[9] (net)                       5       6.7084              0.0000     0.5126 r
+  cpu/dpath/Dut5/B[9] (BranchPro)                                           0.0000     0.5126 r
+  cpu/dpath/Dut5/B[9] (net)                             6.7084              0.0000     0.5126 r
+  cpu/dpath/Dut5/U205/A1 (XNOR2X2_RVT)                            0.0405    0.0002 *   0.5128 r
+  cpu/dpath/Dut5/U205/Y (XNOR2X2_RVT)                             0.0280    0.0633     0.5761 r
+  cpu/dpath/Dut5/n160 (net)                     1       3.3874              0.0000     0.5761 r
+  cpu/dpath/Dut5/U80/A2 (AND2X1_RVT)                              0.0280    0.0001 *   0.5762 r
+  cpu/dpath/Dut5/U80/Y (AND2X1_RVT)                               0.0136    0.0297     0.6059 r
+  cpu/dpath/Dut5/n337 (net)                     1       0.4605              0.0000     0.6059 r
+  cpu/dpath/Dut5/U79/A1 (AND4X1_RVT)                              0.0136    0.0000 *   0.6059 r
+  cpu/dpath/Dut5/U79/Y (AND4X1_RVT)                               0.0223    0.0405     0.6464 r
+  cpu/dpath/Dut5/n406 (net)                     1       0.5718              0.0000     0.6464 r
+  cpu/dpath/Dut5/U129/A1 (NAND4X0_RVT)                            0.0223    0.0000 *   0.6464 r
+  cpu/dpath/Dut5/U129/Y (NAND4X0_RVT)                             0.0396    0.0283     0.6747 f
+  cpu/dpath/Dut5/n441 (net)                     1       0.6153              0.0000     0.6747 f
+  cpu/dpath/Dut5/U68/A1 (OR2X2_RVT)                               0.0396    0.0000 *   0.6747 f
+  cpu/dpath/Dut5/U68/Y (OR2X2_RVT)                                0.0180    0.0428     0.7175 f
+  cpu/dpath/Dut5/n88 (net)                      1       1.4559              0.0000     0.7175 f
+  cpu/dpath/Dut5/U268/A1 (AO22X1_RVT)                             0.0180    0.0000 *   0.7175 f
+  cpu/dpath/Dut5/U268/Y (AO22X1_RVT)                              0.0177    0.0411     0.7586 f
+  cpu/dpath/Dut5/n446 (net)                     1       1.2164              0.0000     0.7586 f
+  cpu/dpath/Dut5/U270/A1 (XNOR2X2_RVT)                            0.0177    0.0000 *   0.7586 f
+  cpu/dpath/Dut5/U270/Y (XNOR2X2_RVT)                             0.0210    0.0508     0.8094 r
+  cpu/dpath/Dut5/n84 (net)                      1       0.7600              0.0000     0.8094 r
+  cpu/dpath/Dut5/U218/A1 (NAND3X0_RVT)                            0.0210    0.0000 *   0.8094 r
+  cpu/dpath/Dut5/U218/Y (NAND3X0_RVT)                             0.0294    0.0230     0.8325 f
+  cpu/dpath/Dut5/n450 (net)                     1       0.4673              0.0000     0.8325 f
+  cpu/dpath/Dut5/U221/A1 (AND3X1_RVT)                             0.0294    0.0000 *   0.8325 f
+  cpu/dpath/Dut5/U221/Y (AND3X1_RVT)                              0.0279    0.0486     0.8811 f
+  cpu/dpath/Dut5/n451 (net)                     1       2.6290              0.0000     0.8811 f
+  cpu/dpath/Dut5/U274/A (INVX4_RVT)                               0.0279    0.0000 *   0.8811 f
+  cpu/dpath/Dut5/U274/Y (INVX4_RVT)                               0.0209    0.0196     0.9007 r
+  cpu/dpath/Dut5/Branchout (net)                3       7.7159              0.0000     0.9007 r
+  cpu/dpath/Dut5/Branchout (BranchPro)                                      0.0000     0.9007 r
+  cpu/dpath/Branchout (net)                             7.7159              0.0000     0.9007 r
+  cpu/dpath/U8711/A1 (AND2X2_RVT)                                 0.0209    0.0005 *   0.9011 r
+  cpu/dpath/U8711/Y (AND2X2_RVT)                                  0.0279    0.0445     0.9456 r
+  cpu/dpath/n9703 (net)                         1       5.1018              0.0000     0.9456 r
+  cpu/dpath/U8712/A (INVX8_RVT)                                   0.0279    0.0000 *   0.9456 r
+  cpu/dpath/U8712/Y (INVX8_RVT)                                   0.0195    0.0142     0.9598 f
+  cpu/dpath/n3856 (net)                        10      11.4764              0.0000     0.9598 f
+  cpu/dpath/U2957/A1 (NAND3X0_RVT)                                0.0195    0.0002 *   0.9600 f
+  cpu/dpath/U2957/Y (NAND3X0_RVT)                                 0.0230    0.0195     0.9795 r
+  cpu/dpath/n3805 (net)                         1       0.5980              0.0000     0.9795 r
+  cpu/dpath/U82/A1 (NAND4X0_RVT)                                  0.0230    0.0000 *   0.9795 r
+  cpu/dpath/U82/Y (NAND4X0_RVT)                                   0.0926    0.0638     1.0433 f
+  cpu/dpath/icache_addr[8] (net)                2       3.4496              0.0000     1.0433 f
+  cpu/dpath/icache_addr[8] (datapath)                                       0.0000     1.0433 f
+  cpu/n10 (net)                                         3.4496              0.0000     1.0433 f
+  cpu/U1/A (NBUFFX8_RVT)                                          0.0926    0.0001 *   1.0434 f
+  cpu/U1/Y (NBUFFX8_RVT)                                          0.0289    0.0482     1.0916 f
+  cpu/icache_addr[8] (net)                      3      11.7227              0.0000     1.0916 f
+  cpu/icache_addr[8] (Riscv141)                                             0.0000     1.0916 f
+  icache_addr[8] (net)                                 11.7227              0.0000     1.0916 f
+  mem/icache_addr[8] (Memory141)                                            0.0000     1.0916 f
+  mem/icache_addr[8] (net)                             11.7227              0.0000     1.0916 f
+  mem/icache/cpu_req_addr[6] (cache_0)                                      0.0000     1.0916 f
+  mem/icache/cpu_req_addr[6] (net)                     11.7227              0.0000     1.0916 f
+  mem/icache/U291/A2 (MUX21X2_RVT)                                0.0289    0.0010 *   1.0926 f
+  mem/icache/U291/Y (MUX21X2_RVT)                                 0.0552    0.0777     1.1702 f
+  mem/icache/data_idx[6] (net)                  1      12.9962              0.0000     1.1702 f
+  mem/icache/data/A1[4] (SRAM1RW256x128_new)                      0.0736    0.0016 *   1.1719 f
+  data arrival time                                                                    1.1719
+
+  clock clk (rise edge)                                                     1.2000     1.2000
+  clock network delay (ideal)                                               0.0000     1.2000
+  clock uncertainty                                                        -0.0600     1.1400
+  mem/icache/data/CE1 (SRAM1RW256x128_new)                                  0.0000     1.1400 r
+  library setup time                                                       -0.0100     1.1300
+  data required time                                                                   1.1300
+  ----------------------------------------------------------------------------------------------
+  data required time                                                                   1.1300
+  data arrival time                                                                   -1.1719
+  ----------------------------------------------------------------------------------------------
+  slack (VIOLATED)                                                                    -0.0419
+
+
+  Startpoint: cpu/dpath/InstrE_reg_22_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: mem/icache/data
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                       Fanout       Cap     Trans      Incr       Path
+  ----------------------------------------------------------------------------------------------
+  clock clk (rise edge)                                                     0.0000     0.0000
+  clock network delay (ideal)                                               0.0000     0.0000
+  cpu/dpath/InstrE_reg_22_/CLK (DFFX1_RVT)                        0.0000    0.0000 #   0.0000 r
+  cpu/dpath/InstrE_reg_22_/Q (DFFX1_RVT)                          0.0240    0.0899     0.0899 f
+  cpu/dpath/n9764 (net)                         1       2.1337              0.0000     0.0899 f
+  cpu/dpath/U8081/A (NBUFFX16_RVT)                                0.0240    0.0000 *   0.0899 f
+  cpu/dpath/U8081/Y (NBUFFX16_RVT)                                0.0179    0.0338     0.1237 f
+  cpu/dpath/datapath_contents[22] (net)        12      20.1535              0.0000     0.1237 f
+  cpu/dpath/U3106/A (INVX8_RVT)                                   0.0179    0.0013 *   0.1250 f
+  cpu/dpath/U3106/Y (INVX8_RVT)                                   0.0106    0.0091     0.1341 r
+  cpu/dpath/n6217 (net)                         5       2.9282              0.0000     0.1341 r
+  cpu/dpath/U8599/A2 (AND2X1_RVT)                                 0.0106    0.0000 *   0.1341 r
+  cpu/dpath/U8599/Y (AND2X1_RVT)                                  0.0172    0.0312     0.1653 r
+  cpu/dpath/n9696 (net)                         1       1.4345              0.0000     0.1653 r
+  cpu/dpath/U1129/A2 (AND2X4_RVT)                                 0.0172    0.0000 *   0.1653 r
+  cpu/dpath/U1129/Y (AND2X4_RVT)                                  0.0377    0.0592     0.2245 r
+  cpu/dpath/n3665 (net)                         6      13.7376              0.0000     0.2245 r
+  cpu/dpath/U8533/A (NBUFFX16_RVT)                                0.0377    0.0000 *   0.2245 r
+  cpu/dpath/U8533/Y (NBUFFX16_RVT)                                0.0210    0.0379     0.2624 r
+  cpu/dpath/n9540 (net)                        20      20.9345              0.0000     0.2624 r
+  cpu/dpath/U3267/A (NBUFFX8_RVT)                                 0.0210    0.0000 *   0.2625 r
+  cpu/dpath/U3267/Y (NBUFFX8_RVT)                                 0.0151    0.0285     0.2910 r
+  cpu/dpath/n8857 (net)                         3       5.6541              0.0000     0.2910 r
+  cpu/dpath/U1145/A1 (AO22X1_RVT)                                 0.0151    0.0001 *   0.2911 r
+  cpu/dpath/U1145/Y (AO22X1_RVT)                                  0.0205    0.0444     0.3355 r
+  cpu/dpath/n918 (net)                          1       0.7237              0.0000     0.3355 r
+  cpu/dpath/U1232/A2 (OR2X1_RVT)                                  0.0205    0.0000 *   0.3355 r
+  cpu/dpath/U1232/Y (OR2X1_RVT)                                   0.0155    0.0298     0.3653 r
+  cpu/dpath/n904 (net)                          1       0.7698              0.0000     0.3653 r
+  cpu/dpath/U1231/A3 (OR3X1_RVT)                                  0.0155    0.0000 *   0.3653 r
+  cpu/dpath/U1231/Y (OR3X1_RVT)                                   0.0193    0.0344     0.3997 r
+  cpu/dpath/n917 (net)                          1       0.7604              0.0000     0.3997 r
+  cpu/dpath/U8457/A3 (AO22X2_RVT)                                 0.0193    0.0000 *   0.3997 r
+  cpu/dpath/U8457/Y (AO22X2_RVT)                                  0.0462    0.0642     0.4639 r
+  cpu/dpath/n6086 (net)                         2       9.5261              0.0000     0.4639 r
+  cpu/dpath/U8054/A1 (AO21X1_RVT)                                 0.0462    0.0008 *   0.4647 r
+  cpu/dpath/U8054/Y (AO21X1_RVT)                                  0.0356    0.0627     0.5274 r
+  cpu/dpath/SrcB[11] (net)                      4       3.9295              0.0000     0.5274 r
+  cpu/dpath/Dut5/B[11] (BranchPro)                                          0.0000     0.5274 r
+  cpu/dpath/Dut5/B[11] (net)                            3.9295              0.0000     0.5274 r
+  cpu/dpath/Dut5/U76/A1 (OR2X2_RVT)                               0.0356    0.0000 *   0.5274 r
+  cpu/dpath/Dut5/U76/Y (OR2X2_RVT)                                0.0196    0.0424     0.5699 r
+  cpu/dpath/Dut5/n216 (net)                     4       2.2053              0.0000     0.5699 r
+  cpu/dpath/Dut5/U58/A1 (AOI21X1_RVT)                             0.0196    0.0000 *   0.5699 r
+  cpu/dpath/Dut5/U58/Y (AOI21X1_RVT)                              0.0130    0.0506     0.6205 f
+  cpu/dpath/Dut5/n329 (net)                     1       0.5699              0.0000     0.6205 f
+  cpu/dpath/Dut5/U57/A2 (AND2X1_RVT)                              0.0130    0.0000 *   0.6205 f
+  cpu/dpath/Dut5/U57/Y (AND2X1_RVT)                               0.0141    0.0291     0.6496 f
+  cpu/dpath/Dut5/n21 (net)                      1       0.8254              0.0000     0.6496 f
+  cpu/dpath/Dut5/U19/A2 (OA21X1_RVT)                              0.0141    0.0000 *   0.6496 f
+  cpu/dpath/Dut5/U19/Y (OA21X1_RVT)                               0.0181    0.0354     0.6851 f
+  cpu/dpath/Dut5/n103 (net)                     1       1.0424              0.0000     0.6851 f
+  cpu/dpath/Dut5/U265/A2 (AO21X1_RVT)                             0.0181    0.0000 *   0.6851 f
+  cpu/dpath/Dut5/U265/Y (AO21X1_RVT)                              0.0202    0.0414     0.7265 f
+  cpu/dpath/Dut5/n87 (net)                      1       0.9935              0.0000     0.7265 f
+  cpu/dpath/Dut5/U268/A3 (AO22X1_RVT)                             0.0202    0.0000 *   0.7265 f
+  cpu/dpath/Dut5/U268/Y (AO22X1_RVT)                              0.0177    0.0321     0.7586 f
+  cpu/dpath/Dut5/n446 (net)                     1       1.2164              0.0000     0.7586 f
+  cpu/dpath/Dut5/U270/A1 (XNOR2X2_RVT)                            0.0177    0.0000 *   0.7586 f
+  cpu/dpath/Dut5/U270/Y (XNOR2X2_RVT)                             0.0210    0.0508     0.8094 r
+  cpu/dpath/Dut5/n84 (net)                      1       0.7600              0.0000     0.8094 r
+  cpu/dpath/Dut5/U218/A1 (NAND3X0_RVT)                            0.0210    0.0000 *   0.8094 r
+  cpu/dpath/Dut5/U218/Y (NAND3X0_RVT)                             0.0294    0.0230     0.8324 f
+  cpu/dpath/Dut5/n450 (net)                     1       0.4673              0.0000     0.8324 f
+  cpu/dpath/Dut5/U221/A1 (AND3X1_RVT)                             0.0294    0.0000 *   0.8324 f
+  cpu/dpath/Dut5/U221/Y (AND3X1_RVT)                              0.0279    0.0486     0.8810 f
+  cpu/dpath/Dut5/n451 (net)                     1       2.6290              0.0000     0.8810 f
+  cpu/dpath/Dut5/U274/A (INVX4_RVT)                               0.0279    0.0000 *   0.8810 f
+  cpu/dpath/Dut5/U274/Y (INVX4_RVT)                               0.0209    0.0196     0.9006 r
+  cpu/dpath/Dut5/Branchout (net)                3       7.7159              0.0000     0.9006 r
+  cpu/dpath/Dut5/Branchout (BranchPro)                                      0.0000     0.9006 r
+  cpu/dpath/Branchout (net)                             7.7159              0.0000     0.9006 r
+  cpu/dpath/U8711/A1 (AND2X2_RVT)                                 0.0209    0.0005 *   0.9011 r
+  cpu/dpath/U8711/Y (AND2X2_RVT)                                  0.0279    0.0445     0.9456 r
+  cpu/dpath/n9703 (net)                         1       5.1018              0.0000     0.9456 r
+  cpu/dpath/U8712/A (INVX8_RVT)                                   0.0279    0.0000 *   0.9456 r
+  cpu/dpath/U8712/Y (INVX8_RVT)                                   0.0195    0.0142     0.9598 f
+  cpu/dpath/n3856 (net)                        10      11.4764              0.0000     0.9598 f
+  cpu/dpath/U2957/A1 (NAND3X0_RVT)                                0.0195    0.0002 *   0.9600 f
+  cpu/dpath/U2957/Y (NAND3X0_RVT)                                 0.0230    0.0195     0.9794 r
+  cpu/dpath/n3805 (net)                         1       0.5980              0.0000     0.9794 r
+  cpu/dpath/U82/A1 (NAND4X0_RVT)                                  0.0230    0.0000 *   0.9794 r
+  cpu/dpath/U82/Y (NAND4X0_RVT)                                   0.0926    0.0638     1.0433 f
+  cpu/dpath/icache_addr[8] (net)                2       3.4496              0.0000     1.0433 f
+  cpu/dpath/icache_addr[8] (datapath)                                       0.0000     1.0433 f
+  cpu/n10 (net)                                         3.4496              0.0000     1.0433 f
+  cpu/U1/A (NBUFFX8_RVT)                                          0.0926    0.0001 *   1.0434 f
+  cpu/U1/Y (NBUFFX8_RVT)                                          0.0289    0.0482     1.0915 f
+  cpu/icache_addr[8] (net)                      3      11.7227              0.0000     1.0915 f
+  cpu/icache_addr[8] (Riscv141)                                             0.0000     1.0915 f
+  icache_addr[8] (net)                                 11.7227              0.0000     1.0915 f
+  mem/icache_addr[8] (Memory141)                                            0.0000     1.0915 f
+  mem/icache_addr[8] (net)                             11.7227              0.0000     1.0915 f
+  mem/icache/cpu_req_addr[6] (cache_0)                                      0.0000     1.0915 f
+  mem/icache/cpu_req_addr[6] (net)                     11.7227              0.0000     1.0915 f
+  mem/icache/U291/A2 (MUX21X2_RVT)                                0.0289    0.0010 *   1.0925 f
+  mem/icache/U291/Y (MUX21X2_RVT)                                 0.0552    0.0777     1.1702 f
+  mem/icache/data_idx[6] (net)                  1      12.9962              0.0000     1.1702 f
+  mem/icache/data/A1[4] (SRAM1RW256x128_new)                      0.0736    0.0016 *   1.1718 f
+  data arrival time                                                                    1.1718
+
+  clock clk (rise edge)                                                     1.2000     1.2000
+  clock network delay (ideal)                                               0.0000     1.2000
+  clock uncertainty                                                        -0.0600     1.1400
+  mem/icache/data/CE1 (SRAM1RW256x128_new)                                  0.0000     1.1400 r
+  library setup time                                                       -0.0100     1.1300
+  data required time                                                                   1.1300
+  ----------------------------------------------------------------------------------------------
+  data required time                                                                   1.1300
+  data arrival time                                                                   -1.1718
+  ----------------------------------------------------------------------------------------------
+  slack (VIOLATED)                                                                    -0.0418
+
+
+  Startpoint: cpu/dpath/InstrE_reg_20_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: mem/icache/data
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                       Fanout       Cap     Trans      Incr       Path
+  ----------------------------------------------------------------------------------------------
+  clock clk (rise edge)                                                     0.0000     0.0000
+  clock network delay (ideal)                                               0.0000     0.0000
+  cpu/dpath/InstrE_reg_20_/CLK (DFFX2_RVT)                        0.0000    0.0000 #   0.0000 r
+  cpu/dpath/InstrE_reg_20_/Q (DFFX2_RVT)                          0.0458    0.1163     0.1163 f
+  cpu/dpath/datapath_contents[20] (net)         7      12.1331              0.0000     0.1163 f
+  cpu/dpath/U1130/A1 (AND2X1_RVT)                                 0.0458    0.0005 *   0.1168 f
+  cpu/dpath/U1130/Y (AND2X1_RVT)                                  0.0265    0.0475     0.1643 f
+  cpu/dpath/n4807 (net)                         4       2.7612              0.0000     0.1643 f
+  cpu/dpath/U1129/A1 (AND2X4_RVT)                                 0.0265    0.0000 *   0.1643 f
+  cpu/dpath/U1129/Y (AND2X4_RVT)                                  0.0369    0.0613     0.2256 f
+  cpu/dpath/n3665 (net)                         6      13.7376              0.0000     0.2256 f
+  cpu/dpath/U7010/A (NBUFFX8_RVT)                                 0.0369    0.0004 *   0.2261 f
+  cpu/dpath/U7010/Y (NBUFFX8_RVT)                                 0.0233    0.0403     0.2664 f
+  cpu/dpath/n8071 (net)                        17      18.1996              0.0000     0.2664 f
+  cpu/dpath/U7850/A1 (NAND2X0_RVT)                                0.0233    0.0003 *   0.2667 f
+  cpu/dpath/U7850/Y (NAND2X0_RVT)                                 0.0266    0.0230     0.2897 r
+  cpu/dpath/n8905 (net)                         1       0.5330              0.0000     0.2897 r
+  cpu/dpath/U7849/A4 (NAND4X0_RVT)                                0.0266    0.0000 *   0.2897 r
+  cpu/dpath/U7849/Y (NAND4X0_RVT)                                 0.0387    0.0370     0.3267 f
+  cpu/dpath/n8906 (net)                         1       0.5771              0.0000     0.3267 f
+  cpu/dpath/U7853/A2 (OR3X1_RVT)                                  0.0387    0.0000 *   0.3267 f
+  cpu/dpath/U7853/Y (OR3X1_RVT)                                   0.0191    0.0466     0.3733 f
+  cpu/dpath/n840 (net)                          1       0.8927              0.0000     0.3733 f
+  cpu/dpath/U8743/A2 (MUX21X2_RVT)                                0.0191    0.0000 *   0.3734 f
+  cpu/dpath/U8743/Y (MUX21X2_RVT)                                 0.0437    0.0657     0.4390 f
+  cpu/dpath/n6096 (net)                         2       8.9130              0.0000     0.4390 f
+  cpu/dpath/U2178/A1 (AO21X2_RVT)                                 0.0437    0.0007 *   0.4398 f
+  cpu/dpath/U2178/Y (AO21X2_RVT)                                  0.0425    0.0766     0.5164 f
+  cpu/dpath/SrcB[0] (net)                       4      10.0989              0.0000     0.5164 f
+  cpu/dpath/Dut5/B[0] (BranchPro)                                           0.0000     0.5164 f
+  cpu/dpath/Dut5/B[0] (net)                            10.0989              0.0000     0.5164 f
+  cpu/dpath/Dut5/U188/A2 (AO21X1_RVT)                             0.0425    0.0002 *   0.5166 f
+  cpu/dpath/Dut5/U188/Y (AO21X1_RVT)                              0.0157    0.0484     0.5651 f
+  cpu/dpath/Dut5/n387 (net)                     1       0.5141              0.0000     0.5651 f
+  cpu/dpath/Dut5/U118/A2 (NAND3X0_RVT)                            0.0157    0.0000 *   0.5651 f
+  cpu/dpath/Dut5/U118/Y (NAND3X0_RVT)                             0.0214    0.0195     0.5845 r
+  cpu/dpath/Dut5/n402 (net)                     1       0.6118              0.0000     0.5845 r
+  cpu/dpath/Dut5/U86/A2 (AO21X1_RVT)                              0.0214    0.0000 *   0.5845 r
+  cpu/dpath/Dut5/U86/Y (AO21X1_RVT)                               0.0240    0.0487     0.6332 r
+  cpu/dpath/Dut5/n256 (net)                     2       1.6996              0.0000     0.6332 r
+  cpu/dpath/Dut5/U266/A1 (AO21X1_RVT)                             0.0240    0.0000 *   0.6332 r
+  cpu/dpath/Dut5/U266/Y (AO21X1_RVT)                              0.0184    0.0422     0.6755 r
+  cpu/dpath/Dut5/n444 (net)                     1       0.5092              0.0000     0.6755 r
+  cpu/dpath/Dut5/U265/A1 (AO21X1_RVT)                             0.0184    0.0000 *   0.6755 r
+  cpu/dpath/Dut5/U265/Y (AO21X1_RVT)                              0.0206    0.0436     0.7190 r
+  cpu/dpath/Dut5/n87 (net)                      1       0.9935              0.0000     0.7190 r
+  cpu/dpath/Dut5/U268/A3 (AO22X1_RVT)                             0.0206    0.0000 *   0.7190 r
+  cpu/dpath/Dut5/U268/Y (AO22X1_RVT)                              0.0225    0.0384     0.7574 r
+  cpu/dpath/Dut5/n446 (net)                     1       1.2164              0.0000     0.7574 r
+  cpu/dpath/Dut5/U270/A1 (XNOR2X2_RVT)                            0.0225    0.0000 *   0.7574 r
+  cpu/dpath/Dut5/U270/Y (XNOR2X2_RVT)                             0.0210    0.0519     0.8093 r
+  cpu/dpath/Dut5/n84 (net)                      1       0.7600              0.0000     0.8093 r
+  cpu/dpath/Dut5/U218/A1 (NAND3X0_RVT)                            0.0210    0.0000 *   0.8093 r
+  cpu/dpath/Dut5/U218/Y (NAND3X0_RVT)                             0.0294    0.0230     0.8323 f
+  cpu/dpath/Dut5/n450 (net)                     1       0.4673              0.0000     0.8323 f
+  cpu/dpath/Dut5/U221/A1 (AND3X1_RVT)                             0.0294    0.0000 *   0.8323 f
+  cpu/dpath/Dut5/U221/Y (AND3X1_RVT)                              0.0279    0.0486     0.8810 f
+  cpu/dpath/Dut5/n451 (net)                     1       2.6290              0.0000     0.8810 f
+  cpu/dpath/Dut5/U274/A (INVX4_RVT)                               0.0279    0.0000 *   0.8810 f
+  cpu/dpath/Dut5/U274/Y (INVX4_RVT)                               0.0209    0.0196     0.9006 r
+  cpu/dpath/Dut5/Branchout (net)                3       7.7159              0.0000     0.9006 r
+  cpu/dpath/Dut5/Branchout (BranchPro)                                      0.0000     0.9006 r
+  cpu/dpath/Branchout (net)                             7.7159              0.0000     0.9006 r
+  cpu/dpath/U8711/A1 (AND2X2_RVT)                                 0.0209    0.0005 *   0.9010 r
+  cpu/dpath/U8711/Y (AND2X2_RVT)                                  0.0279    0.0445     0.9455 r
+  cpu/dpath/n9703 (net)                         1       5.1018              0.0000     0.9455 r
+  cpu/dpath/U8712/A (INVX8_RVT)                                   0.0279    0.0000 *   0.9455 r
+  cpu/dpath/U8712/Y (INVX8_RVT)                                   0.0195    0.0142     0.9597 f
+  cpu/dpath/n3856 (net)                        10      11.4764              0.0000     0.9597 f
+  cpu/dpath/U2957/A1 (NAND3X0_RVT)                                0.0195    0.0002 *   0.9599 f
+  cpu/dpath/U2957/Y (NAND3X0_RVT)                                 0.0230    0.0195     0.9793 r
+  cpu/dpath/n3805 (net)                         1       0.5980              0.0000     0.9793 r
+  cpu/dpath/U82/A1 (NAND4X0_RVT)                                  0.0230    0.0000 *   0.9794 r
+  cpu/dpath/U82/Y (NAND4X0_RVT)                                   0.0926    0.0638     1.0432 f
+  cpu/dpath/icache_addr[8] (net)                2       3.4496              0.0000     1.0432 f
+  cpu/dpath/icache_addr[8] (datapath)                                       0.0000     1.0432 f
+  cpu/n10 (net)                                         3.4496              0.0000     1.0432 f
+  cpu/U1/A (NBUFFX8_RVT)                                          0.0926    0.0001 *   1.0433 f
+  cpu/U1/Y (NBUFFX8_RVT)                                          0.0289    0.0482     1.0914 f
+  cpu/icache_addr[8] (net)                      3      11.7227              0.0000     1.0914 f
+  cpu/icache_addr[8] (Riscv141)                                             0.0000     1.0914 f
+  icache_addr[8] (net)                                 11.7227              0.0000     1.0914 f
+  mem/icache_addr[8] (Memory141)                                            0.0000     1.0914 f
+  mem/icache_addr[8] (net)                             11.7227              0.0000     1.0914 f
+  mem/icache/cpu_req_addr[6] (cache_0)                                      0.0000     1.0914 f
+  mem/icache/cpu_req_addr[6] (net)                     11.7227              0.0000     1.0914 f
+  mem/icache/U291/A2 (MUX21X2_RVT)                                0.0289    0.0010 *   1.0924 f
+  mem/icache/U291/Y (MUX21X2_RVT)                                 0.0552    0.0777     1.1701 f
+  mem/icache/data_idx[6] (net)                  1      12.9962              0.0000     1.1701 f
+  mem/icache/data/A1[4] (SRAM1RW256x128_new)                      0.0736    0.0016 *   1.1718 f
+  data arrival time                                                                    1.1718
+
+  clock clk (rise edge)                                                     1.2000     1.2000
+  clock network delay (ideal)                                               0.0000     1.2000
+  clock uncertainty                                                        -0.0600     1.1400
+  mem/icache/data/CE1 (SRAM1RW256x128_new)                                  0.0000     1.1400 r
+  library setup time                                                       -0.0100     1.1300
+  data required time                                                                   1.1300
+  ----------------------------------------------------------------------------------------------
+  data required time                                                                   1.1300
+  data arrival time                                                                   -1.1718
+  ----------------------------------------------------------------------------------------------
+  slack (VIOLATED)                                                                    -0.0418
+
+
+1
